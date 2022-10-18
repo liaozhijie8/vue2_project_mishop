@@ -1,0 +1,26 @@
+import request from '@/utils/request'
+
+/* 登录请求 */
+export const login = (data) => {
+  return request({
+    url: '/login',
+    method: 'POST',
+    data
+  })
+}
+
+/* 注册 */
+export const register = (data) => {
+  return request({
+    url: '/register',
+    method: 'POST',
+    data
+  })
+}
+
+export const test = () => {
+  return request({
+    url: '/test2',
+    method: 'GET'
+  })
+}

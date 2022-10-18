@@ -1,5 +1,6 @@
 # vue2_project_mishop
-
+## npm-
+v14.18.2
 ## Project setup
 ```
 npm install
