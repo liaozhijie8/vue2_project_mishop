@@ -24,3 +24,10 @@ export const test = () => {
     method: 'GET'
   })
 }
+/* 获取个人信息 */
+export const profile = () => {
+  return request({
+    url: '/profile',
+    method: 'GET'
+  })
+}

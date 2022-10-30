@@ -1,4 +1,5 @@
 import axios from 'axios'
+import store from '@/store'
 import { BASE_URL } from '@/constant'
 /* mock.js设置 */
 const mock = false
@@ -12,15 +13,9 @@ const service = axios.create({
 /* 请求拦截器 */
 service.interceptors.request.use(
   (config) => {
-    // if (user.user_token) {
-    //   /* 前端判断token是否失效 */
-    //   if (isTokenTimeout()) {
-    //     // 超时，退出
-    //     user.logout('有效期过期,请重新登录')
-    //     return Promise.reject(new Error('token失效'))
-    //   }
-    //   config.headers.Authorization = 'Bearer ' + user.user_token
-    // }
+    if (store.getters.token) {
+      config.headers.Authorization = 'Bearer ' + store.getters.token
+    }
     return config
   },
   (error) => {

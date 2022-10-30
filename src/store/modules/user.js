@@ -1,4 +1,4 @@
-import { login, register } from '@/api/user'
+import { login, register, profile } from '@/api/user'
 import md5 from 'md5'
 import { setItem, getItem } from '@/utils/storage'
 import { TOKEN } from '@/constant'
@@ -13,7 +13,7 @@ export default {
   }),
   mutations: {
     setToken(state, token) {
-      state.tolen = token
+      state.token = token
       setItem(TOKEN, token)
     },
     setUserInfo(state, userInfo) {
@@ -25,7 +25,7 @@ export default {
   },
   actions: {
     /* 登录接口 */
-    getLogin(content, payload) {
+    getLogin({ dispatch, commit }, payload) {
       const { user_name, password } = payload
       return new Promise((resolve, reject) => {
         login({
@@ -35,7 +35,8 @@ export default {
           .then((res) => {
             const { token } = res.result
             const message = res.message
-            this.commit('user/setToken', token)
+            commit('setToken', token)
+            dispatch('getProfile')
             // todo:保存登录时间
             resolve(message)
           })
@@ -57,9 +58,13 @@ export default {
           })
           .catch((err) => {
             reject(err)
-            console.log(err)
           })
       })
+    },
+    /* 获取个人信息 */
+    async getProfile({ commit }) {
+      const { result } = await profile()
+      commit('setUserInfo', result)
     }
   }
 }
