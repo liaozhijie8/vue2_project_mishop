@@ -1,22 +1,6 @@
 <template>
   <div class="product-buy">
-    <div class="nav-header">
-      <div class="container">
-        <div class="title">
-          <span>小米手机</span>
-          <span>xiaomicc9</span>
-        </div>
-        <div class="detail">
-          <ul>
-            <li><a href="">概述页</a></li>
-            <li><a href="">参数页</a></li>
-            <li><a href="">F码通道</a></li>
-            <li><a href="">咨询客服</a></li>
-            <li><a href="">用户评价</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
+    <NavHeader></NavHeader>
     <div class="main">
       <div class="container">
         <div class="swiper-container">
@@ -24,20 +8,79 @@
             <swiperBase :swiper-data="slideList"></swiperBase>
           </div>
         </div>
-        <div class="buy-detail">购买详情</div>
+        <div class="buy-detail">
+          <textBox></textBox>
+          <addressBox></addressBox>
+          <div class="option-box">
+            <optionBox
+              v-for="item in versionData"
+              :key="item.id"
+              :data="item.list"
+            ></optionBox>
+            <serviceBox
+              v-for="item in serviceData"
+              :key="item.id"
+              :title="item.title"
+              :service-data="item.data"
+            ></serviceBox>
+          </div>
+          <selectedBox></selectedBox>
+          <sumbitBnt></sumbitBnt>
+          <afterSale></afterSale>
+        </div>
       </div>
     </div>
+    <footerBOx></footerBOx>
   </div>
 </template>
 <script>
 import swiperBase from '@/components/swiper/index.vue'
+import serviceBox from './components/serviceBox/index.vue'
+import selectedBox from './components/selectedBox/index.vue'
+import textBox from './components/textBox/index.vue'
+import NavHeader from './components/navHeader/index.vue'
+import optionBox from './components/optionBox/index.vue'
+import addressBox from './components/addressBox/index.vue'
+import sumbitBnt from './components/sumbitBnt/index.vue'
+import afterSale from './components/afterSale/index.vue'
+import footerBOx from './components/footerBox/index.vue'
 export default {
   name: 'product-buy',
   components: {
-    swiperBase
+    swiperBase,
+    serviceBox,
+    selectedBox,
+    textBox,
+    NavHeader,
+    optionBox,
+    addressBox,
+    sumbitBnt,
+    afterSale,
+    footerBOx
   },
   data() {
     return {
+      // 选择版本数据
+      versionData: [
+        {
+          id: 0,
+          title: '选择版本',
+          list: [
+            { _id: 1, spec: '8GB+128GB' },
+            { _id: 2, spec: '12GB+128GB' },
+            { _id: 3, spec: '8GB+256GB' }
+          ]
+        },
+        {
+          id: 123,
+          title: '选择颜色',
+          list: [
+            { _id: 0, spec: '白色' },
+            { _id: 2, spec: '金色' },
+            { _id: 3, spec: '蓝色' }
+          ]
+        }
+      ],
       slideList: [
         {
           id: '42',
@@ -51,6 +94,75 @@ export default {
           id: '46',
           img: 'https://cdn.cnbj0.fds.api.mi-img.com/b2c-shopapi-pms/pms_1656916238.06123122.png'
         }
+      ],
+      serviceData: [
+        {
+          id: 1,
+          title: '选择小米提供的尊享服务',
+          data: [
+            {
+              id: 1,
+              service: 'MiCare保障服务',
+              desc: '享碎屏、延保、换电池、保值换新4大权益',
+              price: 749,
+              icon: 'https://cdn.cnbj0.fds.api.mi-img.com/b2c-shopapi-pms/79E8B4A5C643271EA2CCA3EA58D460F4.png'
+            }
+          ]
+        },
+        {
+          id: 2,
+          title: '选择小米提供的意外保修服务',
+          data: [
+            {
+              id: 1,
+              service: '意外保障服务',
+              desc: '1年1次意外损坏 官方原厂 免费维修',
+              price: 599,
+              icon: 'https://cdn.cnbj0.fds.api.mi-img.com/b2c-shopapi-pms/79E8B4A5C643271EA2CCA3EA58D460F4.png'
+            },
+            {
+              id: 2,
+              service: '碎屏保障服务',
+              desc: '1年1次碎屏 官方原厂 免费维修',
+              price: 174,
+              icon: 'https://cdn.cnbj0.fds.api.mi-img.com/b2c-shopapi-pms/79E8B4A5C643271EA2CCA3EA58D460F4.png'
+            }
+          ]
+        },
+        {
+          id: 3,
+          title: '选择小米提供的云空间服务',
+          data: [
+            {
+              id: 1,
+              service: '云空间年卡200G',
+              desc: '主商品签收后，自动激活至下单帐号',
+              price: 208,
+              icon: 'https://cdn.cnbj0.fds.api.mi-img.com/b2c-shopapi-pms/pms_1600176481.06844959.png'
+            },
+            {
+              id: 2,
+              service: '云空间年卡 50G',
+              desc: '主商品签收后，自动激活至下单帐号',
+              price: 58,
+              icon: 'https://cdn.cnbj0.fds.api.mi-img.com/b2c-shopapi-pms/pms_1600176481.06844959.png'
+            },
+            {
+              id: 3,
+              service: '云空间月卡200G',
+              desc: '主商品签收后，自动激活至下单帐号',
+              price: 21,
+              icon: 'https://cdn.cnbj0.fds.api.mi-img.com/b2c-shopapi-pms/pms_1600176481.06844959.png'
+            },
+            {
+              id: 4,
+              service: '云空间月卡50G',
+              desc: '主商品签收后，自动激活至下单帐号',
+              price: 6,
+              icon: 'https://cdn.cnbj0.fds.api.mi-img.com/b2c-shopapi-pms/pms_1600176481.06844959.png'
+            }
+          ]
+        }
       ]
     }
   }
@@ -58,42 +170,10 @@ export default {
 </script>
 <style scoped lang="scss">
 @import '@/assets/scss/config.scss';
+* {
+  box-sizing: border-box;
+}
 .product-buy {
-  .nav-header {
-    background-color: #fff;
-    border-top: 1px solid #e5e5e5;
-    border-bottom: 1px solid #e5e5e5;
-    box-shadow: 0px 7px 6px 0px rgba(0, 0, 0, 0.11);
-    .container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      height: 65px;
-      .detail {
-        li {
-          display: inline-block;
-          a{
-            color: $colorB;
-            &:hover{
-              color: orange;
-            }
-          }
-          &::after{
-            content: '';
-            margin: 0 10px;
-            border: 1px solid rgb(208, 206, 206);
-          }
-          &:last-child {
-            &::after{
-              content: '';
-              border: none;
-              margin: 0;
-            }
-          }
-        }
-      }
-    }
-  }
   .main {
     padding: 50px;
     background-color: #fff;
@@ -103,7 +183,6 @@ export default {
         flex: 1;
         display: flex;
         justify-content: center;
-        align-items: center;
         .box {
           width: 560px;
           height: 560px;
@@ -131,6 +210,9 @@ export default {
       }
       .buy-detail {
         flex: 1;
+        padding: 0 50px;
+        .option-box {
+        }
       }
     }
   }
