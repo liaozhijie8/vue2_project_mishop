@@ -25,9 +25,11 @@
           <div class="row">
             <div class="span4">
               <ul v-if="isPage">
-                <li class="span4-item">
+                <li class="span4-item" @click="goBuy">
                   <img
-                    v-lazy="'https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/059f14c9ba134897be7db7a7286f1bb5.jpg?thumb=1&w=234&h=614&f=webp&q=90'"
+                    v-lazy="
+                      'https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/059f14c9ba134897be7db7a7286f1bb5.jpg?thumb=1&w=234&h=614&f=webp&q=90'
+                    "
                     alt=""
                   />
                 </li>
@@ -42,7 +44,9 @@
                 <ul v-if="display_list === item.sort">
                   <li v-for="(list, index) in item.list" :key="index">
                     <img
-                      v-lazy="'https://cdn.cnbj1.fds.api.mi-img.com/nr-pub/202210262033_ef39fca0e37395d07682124770fd3ad9.png?thumb=1&w=200&h=200&f=webp&q=90'"
+                      v-lazy="
+                        'https://cdn.cnbj1.fds.api.mi-img.com/nr-pub/202210262033_ef39fca0e37395d07682124770fd3ad9.png?thumb=1&w=200&h=200&f=webp&q=90'
+                      "
                       alt=""
                     />
                     <h3 class="title">Redmi Note 12 5G</h3>
@@ -64,6 +68,8 @@
   </div>
 </template>
 <script>
+import router from '@/router'
+
 export default {
   name: 'product-box',
   props: {
@@ -99,6 +105,9 @@ export default {
     },
     classtest(val) {
       return this.display_list === val
+    },
+    goBuy() {
+      router.push('/shop/buy')
     }
   },
   computed: {}

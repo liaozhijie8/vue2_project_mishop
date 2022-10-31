@@ -52,11 +52,11 @@ export default {
           img: '/imgs/slider/slide-3.jpg'
         },
         {
-          id: '',
+          id: '47',
           img: '/imgs/slider/slide-4.jpg'
         },
         {
-          id: '',
+          id: '48',
           img: '/imgs/slider/slide-1.jpg'
         }
       ]
@@ -68,6 +68,7 @@ export default {
 @import '@/assets/scss/config.scss';
 @import '@/assets/scss/base.scss';
 .swiper-box {
+  z-index: 1;
   background-color: #fff;
   .container {
     position: relative;

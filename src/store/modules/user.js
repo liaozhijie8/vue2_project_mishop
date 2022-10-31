@@ -1,7 +1,8 @@
 import { login, register, profile } from '@/api/user'
 import md5 from 'md5'
-import { setItem, getItem } from '@/utils/storage'
+import { setItem, getItem, removeAllItem } from '@/utils/storage'
 import { TOKEN } from '@/constant'
+import router from '@/router'
 
 export default {
   namespaced: true,
@@ -21,6 +22,13 @@ export default {
     },
     setConfirmPassword(state, payload) {
       state.confirmPassword = payload
+    },
+    /*  退出登录 */
+    logout(state) {
+      state.token = ''
+      state.userInfo = {}
+      removeAllItem()
+      router.go(0)
     }
   },
   actions: {

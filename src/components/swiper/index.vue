@@ -1,6 +1,6 @@
 <template>
   <swiper v-bind:options="swiperOption">
-    <swiper-slide v-for="(item, index) in swiperData" v-bind:key="index">
+    <swiper-slide v-for="item in swiperData" :key="item.id">
       <a :href="'/product/' + item.id"><img v-bind:src="item.img" /></a>
     </swiper-slide>
     <!-- Optional controls -->
@@ -21,6 +21,11 @@ export default {
       default: function () {
         return []
       }
+    },
+    // 是否开启自动轮播
+    isAutoplay: {
+      type: Boolean,
+      default: true
     }
   },
   components: { swiper, swiperSlide },
@@ -29,6 +34,7 @@ export default {
       swiperOption: {
         loop: true,
         effect: 'fade',
+        autoplay: this.$props.isAutoplay,
         cubeEffect: {
           shadowScale: 0.6
         },

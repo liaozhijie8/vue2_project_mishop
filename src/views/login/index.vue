@@ -33,12 +33,12 @@
           </li>
         </ul>
         <div class="form">
-          <keep-alive>
-            <transition mode="out-in">
+          <transition mode="out-in">
+            <keep-alive>
               <loginForm v-if="choseForm === 'login'"></loginForm>
               <signupForm v-else></signupForm>
-            </transition>
-          </keep-alive>
+            </keep-alive>
+          </transition>
         </div>
         <div class="other">
           <div>其他方式登录</div>

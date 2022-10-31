@@ -17,10 +17,31 @@
             <a href="javascript:;">天星数科</a>
           </div>
           <div class="topbar-user">
-            <!-- <a href="/login" target="_blank" v-if="!isUserInfo">登录</a> -->
-            <a>{{ $store.getters.userInfo.user_name }}</a>
-            <span>|</span>
-            <a href="javascript:;" @click="test">注册</a>
+            <div class="logined" v-if="isUserInfo">
+              <a class="user_name" @mouseenter="is_active_name = true">
+                <span class="name">{{
+                  $store.getters.userInfo.user_name
+                }}</span>
+                <i class="el-icon-arrow-down icon"></i>
+                <div class="list">
+                  <a href="">个人中心</a>
+                  <a href="">晒单评价</a>
+                  <a href="">我的喜欢</a>
+                  <a href="">小米账号</a>
+                  <a @click.prevent="$store.commit('user/logout')">退出登录</a>
+                  <a href="">我的订单</a>
+                </div>
+              </a>
+              <span>|</span>
+              <a href="">消息通知</a>
+              <span>|</span>
+              <a href="">我的订单</a>
+            </div>
+            <div class="visiting" v-else>
+              <a href="/login">登录</a>
+              <span>|</span>
+              <a href="/login">注册</a>
+            </div>
             <a href="javascript:;" class="cart">
               <i class="el-icon-shopping-cart-2"></i>
               购物车
@@ -36,7 +57,7 @@
       <div class="container">
         <!-- logo区域 -->
         <div class="header-logo">
-          <a href="/#/index"></a>
+          <a href="/"></a>
         </div>
         <!-- 分类区域 -->
         <div class="header-menu">
@@ -88,6 +109,7 @@ export default {
   data() {
     return {
       userInfo: {},
+      is_active_name: false,
       input3: '',
       menuList: ['小米手机', '红米手机', '路由器', '电视'],
       list: [
@@ -186,6 +208,58 @@ export default {
           }
         }
         .topbar-user {
+          div {
+            display: inline-block;
+          }
+          .logined {
+            .user_name {
+              position: relative;
+              width: 110px;
+              text-align: center;
+              vertical-align: middle;
+              z-index: 11;
+              cursor: pointer;
+              &:hover {
+                color: orange;
+                background-color: #fff;
+                .list {
+                  visibility: visible;
+                  height: 200px;
+                  opacity: 1;
+                }
+                .icon {
+                  color: orange;
+                }
+              }
+              .icon {
+                margin-left: 8px;
+                font-size: 12px;
+                font-weight: bold;
+              }
+              .list {
+                position: absolute;
+                visibility: hidden;
+                width: 120px;
+                height: 0;
+                top: 40px;
+                left: 0;
+                opacity: 0;
+                background-color: #fff;
+                transition: all 0.5s;
+                box-shadow: 0px 7px 6px 0px rgba(0, 0, 0, 0.11);
+                a {
+                  display: block;
+                  color: black;
+                  height: 30px;
+                  line-height: 30px;
+                  &:hover {
+                    color: orange;
+                    background-color: #e4dede;
+                  }
+                }
+              }
+            }
+          }
           .cart {
             position: relative;
             display: inline-block;
@@ -198,6 +272,7 @@ export default {
               color: $colorA;
               background-color: #ffffff;
               .cart_list {
+                visibility: visible;
                 min-height: 80px;
                 opacity: 1;
               }
@@ -207,6 +282,7 @@ export default {
               display: flex;
               justify-content: center;
               align-items: center;
+              visibility: hidden;
               right: 0;
               width: 316px;
               min-height: 0;
@@ -264,7 +340,7 @@ export default {
             overflow: hidden;
             border-top: 1px solid #e5e5e5;
             box-shadow: 0px 7px 6px 0px rgba(0, 0, 0, 0.11);
-            z-index: 100;
+            z-index: 10;
             transition: all 0.5s;
             background-color: #ffffff;
             .container {
