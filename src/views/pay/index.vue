@@ -1,9 +1,18 @@
 <template>
-  <div>支付页面</div>
+  <div class="pay-page">
+    <ServiceBarVue></ServiceBarVue>
+    <NavFooterVue></NavFooterVue>
+  </div>
 </template>
 <script>
+import NavFooterVue from '@/layout/NavFooter.vue'
+import ServiceBarVue from '@/layout/ServiceBar.vue'
 export default {
-  name: 'layout',
+  name: 'pay-page',
+  components: {
+    NavFooterVue,
+    ServiceBarVue
+  },
   data() {
     return {}
   }

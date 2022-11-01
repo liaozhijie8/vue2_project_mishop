@@ -22,17 +22,31 @@ const routes = [
         component: () => import('@/views/home/index.vue')
       },
       {
-        path: '/shop/buy',
+        path: '/buy',
         name: 'buy',
         component: () => import('@/views/buy/index.vue')
+      },
+      {
+        path: '/detail',
+        name: 'detail',
+        component: () => import('@/views/productDetail/index.vue')
+      },
+      {
+        path: '/comment',
+        name: 'comment',
+        component: () => import('@/views/comments/index.vue')
+      },
+      {
+        path: '/buy/successTip',
+        name: 'successTip',
+        component: () => import('@/views/butSuccessTip/index.vue')
       }
     ]
   },
   {
     path: '/pay',
     name: 'pay',
-    component: () =>
-      import('@/views/pay/index.vue')
+    component: () => import('@/views/pay/index.vue')
   }
 ]
 

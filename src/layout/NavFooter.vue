@@ -47,9 +47,11 @@ export default {
     justify-content: center;
     align-items: center;
     .footer-logo {
-      margin-bottom: 20px;
+      margin-bottom: 40px;
+      text-align: center;
       img {
-        width: 50px;
+        width: 106px;
+        height: 74px;
         margin-bottom: 10px;
       }
       p{

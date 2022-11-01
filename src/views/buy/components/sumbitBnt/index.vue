@@ -1,6 +1,6 @@
 <template>
   <div class="sumbitBnt">
-    <button>加入购物车</button>
+    <button @click="gotopay">加入购物车</button>
     <button><i class="el-icon-star-off"></i><span>喜欢</span></button>
   </div>
 </template>
@@ -9,6 +9,11 @@ export default {
   name: 'sumbit-bnt',
   data() {
     return {}
+  },
+  methods: {
+    gotopay() {
+      this.$router.push('/buy/successTip')
+    }
   }
 }
 </script>

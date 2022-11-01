@@ -10,6 +10,10 @@ a{
     height: 100%;
   }
 }
+img{
+  width: 100%;
+  height: 100%;
+}
 input{
   outline: none;
   box-sizing: border-box;
@@ -52,4 +56,11 @@ input{
       transition:margin .2s;
     }
   }
+}
+// 遮罩层
+.overlay {
+  opacity: 0.3;
+  background-color: black;
+  height: 100%;
+  width: 100%;
 }

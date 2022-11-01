@@ -17,31 +17,7 @@
             <a href="javascript:;">天星数科</a>
           </div>
           <div class="topbar-user">
-            <div class="logined" v-if="isUserInfo">
-              <a class="user_name" @mouseenter="is_active_name = true">
-                <span class="name">{{
-                  $store.getters.userInfo.user_name
-                }}</span>
-                <i class="el-icon-arrow-down icon"></i>
-                <div class="list">
-                  <a href="">个人中心</a>
-                  <a href="">晒单评价</a>
-                  <a href="">我的喜欢</a>
-                  <a href="">小米账号</a>
-                  <a @click.prevent="$store.commit('user/logout')">退出登录</a>
-                  <a href="">我的订单</a>
-                </div>
-              </a>
-              <span>|</span>
-              <a href="">消息通知</a>
-              <span>|</span>
-              <a href="">我的订单</a>
-            </div>
-            <div class="visiting" v-else>
-              <a href="/login">登录</a>
-              <span>|</span>
-              <a href="/login">注册</a>
-            </div>
+            <UserDorp></UserDorp>
             <a href="javascript:;" class="cart">
               <i class="el-icon-shopping-cart-2"></i>
               购物车
@@ -93,7 +69,6 @@
             placeholder="请输入内容"
             v-model="input3"
             class="input-search"
-            @focus="test"
           >
             <el-button slot="append" icon="el-icon-search"></el-button>
           </el-input>
@@ -103,9 +78,12 @@
   </div>
 </template>
 <script>
-import store from '@/store'
+import UserDorp from '@/components/userDrop/index.vue'
 export default {
   name: 'nva-header',
+  components: {
+    UserDorp
+  },
   data() {
     return {
       userInfo: {},
@@ -165,17 +143,6 @@ export default {
     }
   },
   methods: {
-    test() {
-      console.log(this.getUserInfo)
-    }
-  },
-  computed: {
-    getUserInfo() {
-      return store.getters.userInfo
-    },
-    isUserInfo() {
-      return store.getters.hasUserInfo
-    }
   }
 }
 </script>
@@ -210,55 +177,6 @@ export default {
         .topbar-user {
           div {
             display: inline-block;
-          }
-          .logined {
-            .user_name {
-              position: relative;
-              width: 110px;
-              text-align: center;
-              vertical-align: middle;
-              z-index: 11;
-              cursor: pointer;
-              &:hover {
-                color: orange;
-                background-color: #fff;
-                .list {
-                  visibility: visible;
-                  height: 200px;
-                  opacity: 1;
-                }
-                .icon {
-                  color: orange;
-                }
-              }
-              .icon {
-                margin-left: 8px;
-                font-size: 12px;
-                font-weight: bold;
-              }
-              .list {
-                position: absolute;
-                visibility: hidden;
-                width: 120px;
-                height: 0;
-                top: 40px;
-                left: 0;
-                opacity: 0;
-                background-color: #fff;
-                transition: all 0.5s;
-                box-shadow: 0px 7px 6px 0px rgba(0, 0, 0, 0.11);
-                a {
-                  display: block;
-                  color: black;
-                  height: 30px;
-                  line-height: 30px;
-                  &:hover {
-                    color: orange;
-                    background-color: #e4dede;
-                  }
-                }
-              }
-            }
           }
           .cart {
             position: relative;

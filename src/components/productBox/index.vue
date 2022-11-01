@@ -107,7 +107,7 @@ export default {
       return this.display_list === val
     },
     goBuy() {
-      router.push('/shop/buy')
+      router.push('/buy')
     }
   },
   computed: {}
