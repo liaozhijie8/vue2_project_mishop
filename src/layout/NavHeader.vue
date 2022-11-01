@@ -32,9 +32,7 @@
     <div class="nav-header">
       <div class="container">
         <!-- logo区域 -->
-        <div class="header-logo">
-          <a href="/"></a>
-        </div>
+        <HeaderLogo></HeaderLogo>
         <!-- 分类区域 -->
         <div class="header-menu">
           <ul class="item-menu">
@@ -79,10 +77,12 @@
 </template>
 <script>
 import UserDorp from '@/components/userDrop/index.vue'
+import HeaderLogo from './components/headerLogo/index.vue'
 export default {
   name: 'nva-header',
   components: {
-    UserDorp
+    UserDorp,
+    HeaderLogo
   },
   data() {
     return {
