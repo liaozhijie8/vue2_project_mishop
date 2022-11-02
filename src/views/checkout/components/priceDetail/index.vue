@@ -96,6 +96,9 @@ export default {
         color: black;
         margin-right: 50px;
       }
+      &:last-child{
+        cursor: pointer;
+      }
     }
   }
   .content {

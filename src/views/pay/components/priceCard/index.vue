@@ -46,6 +46,9 @@ export default {
         document.documentElement.scrollTop ||
         document.body.scrollTop
       // 判断页面的滚动距离是否小于吸底元素的位置
+      console.log(scrollTop)
+      console.log(`顶部${this.offsetTop}`)
+      console.log(`自身${this.offsetHeight}`)
       this.headerFixed = scrollTop < this.offsetTop - this.offsetHeight
     },
     gotoCheckout() {

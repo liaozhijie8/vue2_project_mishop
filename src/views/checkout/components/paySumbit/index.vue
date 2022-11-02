@@ -2,12 +2,18 @@
   <div class="pay-container">
     <div class="left">
       <div class="address">
-        <div><span>{{addressData.name}}</span><span>{{addressData.phone}}</span></div>
-        <div><span>{{addressData.address}}</span><span>修改</span></div>
+        <div>
+          <span>{{ addressData.name }}</span
+          ><span>{{ addressData.phone }}</span>
+        </div>
+        <div>
+          <span>{{ addressData.address }}</span
+          ><span>修改</span>
+        </div>
       </div>
     </div>
     <div class="right">
-      <button>返回购物车</button>
+      <button @click="$router.go(-1)">返回购物车</button>
       <button>立即下单</button>
     </div>
   </div>

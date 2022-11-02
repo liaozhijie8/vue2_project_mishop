@@ -5,7 +5,7 @@
         <span class="name">{{ $store.getters.userInfo.user_name }}</span>
         <i class="el-icon-arrow-down icon"></i>
         <div class="list">
-          <a href="">个人中心</a>
+          <a href="/user" target="_blank">个人中心</a>
           <a href="">晒单评价</a>
           <a href="">我的喜欢</a>
           <a href="">小米账号</a>

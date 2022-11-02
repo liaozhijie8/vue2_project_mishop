@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Layout from '@/layout/index.vue'
+import LayoutUser from '@/views/user/layout/index.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -44,10 +45,27 @@ const routes = [
     ]
   },
   {
+    path: '/user',
+    name: 'user',
+    component: LayoutUser,
+    redirect: '/user/portal',
+    children: [
+      {
+        path: '/user/portal',
+        name: 'portal',
+        component: () => import('@/views/user/portal/index.vue')
+      }
+    ]
+  },
+  /* 个人中心 */
+
+  // 购物车清单页面
+  {
     path: '/pay',
     name: 'pay',
     component: () => import('@/views/pay/index.vue')
   },
+  // 结账页面
   {
     path: '/checkout',
     name: 'checkout',
@@ -58,7 +76,13 @@ const routes = [
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes
+  routes,
+  scrollBehavior(to, from, savePosition) {
+    return {
+      x: 0,
+      y: 0
+    }
+  }
 })
 
 export default router

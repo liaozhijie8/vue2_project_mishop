@@ -36,12 +36,9 @@
           />
         </div>
         <div class="overlay"></div>
-        <div class="video-box" :class="{'slide':is_showVideo}">
+        <div class="video-box" :class="{ slide: is_showVideo }">
           <span class="icon-close" @click="showVideo"></span>
-          <video
-            src="/imgs/product/video.mp4"
-            controls="controls"
-          ></video>
+          <video src="/imgs/product/video.mp4" controls="controls" v-if="is_video"></video>
         </div>
       </div>
     </div>
@@ -58,12 +55,20 @@ export default {
   },
   data() {
     return {
-      is_showVideo: false
+      is_showVideo: false,
+      is_video: false
     }
   },
   methods: {
     showVideo() {
       this.is_showVideo = !this.is_showVideo
+      if (!this.is_showVideo) {
+        setTimeout(() => {
+          this.is_video = false
+        }, 500)
+      } else {
+        this.is_video = true
+      }
     }
   }
 }
@@ -135,7 +140,7 @@ export default {
         opacity: 0;
         transform: translate(-50%, -50%);
         transition: all 0.5s;
-        &.slide{
+        &.slide {
           opacity: 1;
           left: 50%;
         }

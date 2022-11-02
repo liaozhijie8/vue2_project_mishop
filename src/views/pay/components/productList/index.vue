@@ -87,6 +87,12 @@ export default {
           img: 'https://cdn.cnbj1.fds.api.mi-img.com/nr-pub/202206131049_c88201c0d878a8168fd3c8de3bc26c96.png?thumb=1&w=80&h=80&f=webp&q=90',
           title: '米家声波电动牙刷',
           price: '49.9'
+        },
+        {
+          id: 13,
+          img: 'https://cdn.cnbj1.fds.api.mi-img.com/nr-pub/202206131049_c88201c0d878a8168fd3c8de3bc26c96.png?thumb=1&w=80&h=80&f=webp&q=90',
+          title: '米家声波电动牙刷',
+          price: '49.9'
         }
       ]
     }
