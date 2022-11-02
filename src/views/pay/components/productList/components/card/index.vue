@@ -10,7 +10,17 @@
     <div class="price" :class="{ active: !isTitle }">
       {{ isTitle ? '单价' : `${cardData.price}元` }}
     </div>
-    <div class="number" :class="{ active: !isTitle }">数量</div>
+    <div class="number" :class="{ active: !isTitle }">
+      <p v-if="isTitle">数量</p>
+      <el-input-number
+        v-else
+        v-model="num"
+        @change="handleChange"
+        :min="1"
+        :max="10"
+        label="描述文字"
+      ></el-input-number>
+    </div>
     <div class="total" :class="{ active: !isTitle }">小计</div>
     <div class="action">
       <p v-if="isTitle">操作</p>
@@ -36,7 +46,12 @@ export default {
     }
   },
   data() {
-    return {}
+    return { num: 1 }
+  },
+  methods: {
+    handleChange(value) {
+      console.log(value)
+    }
   }
 }
 </script>
@@ -79,11 +94,11 @@ export default {
   .action {
     width: 170px;
   }
-  .number{
+  .number {
     width: 200px;
   }
   .action {
-    i{
+    i {
       font-size: 15px;
       width: 30px;
       height: 30px;
@@ -91,7 +106,7 @@ export default {
       text-align: center;
       line-height: 30px;
       border-radius: 30px;
-      &:hover{
+      &:hover {
         background-color: red;
         color: #fff;
         font-weight: 800;

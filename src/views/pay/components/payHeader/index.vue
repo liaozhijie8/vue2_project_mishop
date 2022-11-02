@@ -4,9 +4,14 @@
       <div class="left">
         <HeaderLogo></HeaderLogo>
         <div class="text-box">
-          <div class="title"><p>我的购物车</p></div>
-          <div class="tip">
-            温馨提示：产品是否购买成功，以最终下单为准哦，请尽快结算
+          <div class="checkout" v-if="isCheckout">
+            <p>确认订单</p>
+          </div>
+          <div class="payPage" v-else>
+            <div class="title"><p>我的购物车</p></div>
+            <div class="tip">
+              温馨提示：产品是否购买成功，以最终下单为准哦，请尽快结算
+            </div>
           </div>
         </div>
       </div>
@@ -22,6 +27,13 @@ import HeaderLogo from '@/layout/components/headerLogo/index.vue'
 
 export default {
   name: 'pay-header',
+  props: {
+    // 是否处于确认订单状态
+    isCheckout: {
+      type: Boolean,
+      default: false
+    }
+  },
   components: {
     UserDorp,
     HeaderLogo
@@ -44,15 +56,23 @@ export default {
       display: flex;
       align-items: center;
       .text-box {
-        div {
-          display: inline-block;
+        .checkout{
+          margin-left: 30px;
+          p{
+            font-size: 30px;
+          }
         }
-        .title {
-          font-size: 20px;
-          margin: 0 10px;
-        }
-        .tip {
-          font-size: 12px;
+        .payPage {
+          div {
+            display: inline-block;
+          }
+          .title {
+            font-size: 20px;
+            margin: 0 10px;
+          }
+          .tip {
+            font-size: 12px;
+          }
         }
       }
     }

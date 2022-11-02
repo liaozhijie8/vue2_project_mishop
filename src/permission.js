@@ -16,5 +16,12 @@ router.beforeEach(async (to, from, next) => {
       store.dispatch('user/getProfile')
     }
   }
+  /* 每次跳转处于顶部 */
+  // chrome
+  document.body.scrollTop = 0
+  // firefox
+  document.documentElement.scrollTop = 0
+  // safari
+  window.pageYOffset = 0
   next()
 })
