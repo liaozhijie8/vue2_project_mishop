@@ -11,7 +11,7 @@
         <p>{{ item.name }}</p>
         <p>{{ item.phone }}</p>
         <p>{{ item.address }}</p>
-        <p class="edit" @click="dialogFormVisible = true">修改</p>
+        <p class="edit" @click="isDialog">修改</p>
       </li>
       <li v-if="is_active" class="add">
         <div>
@@ -26,30 +26,16 @@
       <i class="el-icon-arrow-down" v-else></i>
     </div>
     <!-- 弹出修改层 -->
-    <el-dialog title="收货地址" :visible.sync="dialogFormVisible">
-      <el-form :model="form">
-        <el-form-item label="活动名称" :label-width="formLabelWidth">
-          <el-input v-model="form.name" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="活动区域" :label-width="formLabelWidth">
-          <el-select v-model="form.region" placeholder="请选择活动区域">
-            <el-option label="区域一" value="shanghai"></el-option>
-            <el-option label="区域二" value="beijing"></el-option>
-          </el-select>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false"
-          >确 定</el-button
-        >
-      </div>
-    </el-dialog>
+    <AddressDialog :is-visible="is_dialog" @close-event="test"></AddressDialog>
   </div>
 </template>
 <script>
+import AddressDialog from '../addressEdit/index.vue'
 export default {
   name: 'address-box',
+  components: {
+    AddressDialog
+  },
   props: {
     addressData: {
       type: Array,
@@ -64,18 +50,7 @@ export default {
       isLoadMore: true,
       displayList: this.$props.addressData,
       is_active: true,
-      dialogFormVisible: false,
-      form: {
-        name: '',
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: ''
-      },
-      formLabelWidth: '120px'
+      is_dialog: false
     }
   },
   methods: {
@@ -84,6 +59,13 @@ export default {
     },
     isLoading() {
       this.isLoadMore = !this.isLoadMore
+    },
+    // 弹出修改层
+    isDialog() {
+      this.is_dialog = true
+    },
+    test(val) {
+      this.is_dialog = val
     }
   },
   computed: {
@@ -120,7 +102,6 @@ export default {
   box-sizing: border-box;
 }
 .address-container {
-  padding: 20px;
   .header {
     margin-bottom: 20px;
     font-size: 16px;
