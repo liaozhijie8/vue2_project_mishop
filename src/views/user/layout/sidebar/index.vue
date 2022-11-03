@@ -3,7 +3,7 @@
     <ul>
       <li>订单中心</li>
       <li  @click="$router.push('/user/order')">我的订单</li>
-      <li>评价晒单</li>
+      <li @click="$router.push('/user/order/comment')">评价晒单</li>
       <li>话费充值订单</li>
       <li>以旧换新订单</li>
     </ul>

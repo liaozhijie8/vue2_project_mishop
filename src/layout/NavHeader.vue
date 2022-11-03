@@ -30,120 +30,23 @@
       </div>
     </div>
     <div class="nav-header">
-      <div class="container">
-        <!-- logo区域 -->
-        <HeaderLogo></HeaderLogo>
-        <!-- 分类区域 -->
-        <div class="header-menu">
-          <ul class="item-menu">
-            <li class="nav-category">
-              <span v-if="true">全部商品分类</span>
-            </li>
-            <li class="item-menu-li" v-for="item in list" :key="item.id">
-              <span>{{ item.name }}</span>
-              <div class="item-children">
-                <div class="container">
-                  <ul
-                    v-for="item in item.product"
-                    :key="item.id"
-                    class="product-box"
-                  >
-                    <li class="product">
-                      <div class="pro-img">
-                        <img src="/imgs/nav-img/nav-1.png" alt="" />
-                      </div>
-                      <div class="pro-name">{{ item.proname }}</div>
-                      <div class="pro-price">{{ item.proprice }}</div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-        <!-- 搜索区域 -->
-        <div class="header-search">
-          <el-input
-            placeholder="请输入内容"
-            v-model="input3"
-            class="input-search"
-          >
-            <el-button slot="append" icon="el-icon-search"></el-button>
-          </el-input>
-        </div>
-      </div>
+      <HeaderSort></HeaderSort>
     </div>
   </div>
 </template>
 <script>
 import UserDorp from '@/components/userDrop/index.vue'
-import HeaderLogo from './components/headerLogo/index.vue'
+import HeaderSort from './components/headerSort/index.vue'
 export default {
   name: 'nva-header',
   components: {
     UserDorp,
-    HeaderLogo
+    HeaderSort
   },
   data() {
-    return {
-      userInfo: {},
-      is_active_name: false,
-      input3: '',
-      menuList: ['小米手机', '红米手机', '路由器', '电视'],
-      list: [
-        {
-          id: '1',
-          name: '小米手机',
-          product: [
-            { id: 1, proname: '小米手机', proprice: 1999 },
-            { id: 2, proname: '小米cc9', proprice: 1999 },
-            { id: 3, proname: '小米cc9', proprice: 1999 },
-            { id: 4, proname: '小米cc9', proprice: 1999 },
-            { id: 5, proname: '小米cc9', proprice: 1999 },
-            { id: 6, proname: '小米cc9', proprice: 1999 }
-          ]
-        },
-        {
-          id: '2',
-          name: '红米手机',
-          product: [
-            { id: 1, proname: '红米手机', proprice: 1999 },
-            { id: 2, proname: '小米cc9', proprice: 1999 },
-            { id: 3, proname: '小米cc9', proprice: 1999 },
-            { id: 4, proname: '小米cc9', proprice: 1999 },
-            { id: 5, proname: '小米cc9', proprice: 1999 },
-            { id: 6, proname: '小米cc9', proprice: 1999 }
-          ]
-        },
-        {
-          id: '3',
-          name: '路由器',
-          product: [
-            { id: 1, proname: '小米cc9', proprice: 1999 },
-            { id: 2, proname: '小米cc9', proprice: 1999 },
-            { id: 3, proname: '小米cc9', proprice: 1999 },
-            { id: 4, proname: '小米cc9', proprice: 1999 },
-            { id: 5, proname: '小米cc9', proprice: 1999 },
-            { id: 6, proname: '小米cc9', proprice: 1999 }
-          ]
-        },
-        {
-          id: '4',
-          name: '电视',
-          product: [
-            { id: 1, proname: '小米cc9', proprice: 1999 },
-            { id: 2, proname: '小米cc9', proprice: 1999 },
-            { id: 3, proname: '小米cc9', proprice: 1999 },
-            { id: 4, proname: '小米cc9', proprice: 1999 },
-            { id: 5, proname: '小米cc9', proprice: 1999 },
-            { id: 6, proname: '小米cc9', proprice: 1999 }
-          ]
-        }
-      ]
-    }
+    return {}
   },
-  methods: {
-  }
+  methods: {}
 }
 </script>
 <style scoped lang="scss">
@@ -211,118 +114,6 @@ export default {
               background-color: #ffffff;
               color: #333;
             }
-          }
-        }
-      }
-    }
-  }
-  .nav-header {
-    position: relative;
-    background-color: #fff;
-    .container {
-      height: 100px;
-      @include flex();
-      .header-menu {
-        width: 850px;
-        @include height(100px);
-        .item-menu {
-          display: inline-block;
-          color: #333;
-          font-weight: bold;
-          font-size: 16px;
-          li {
-            display: inline-block;
-          }
-          .nav-category {
-            width: 116px;
-          }
-          .item-menu-li {
-            &:hover {
-              color: $colorA;
-              .item-children {
-                height: 220px;
-                opacity: 1;
-              }
-            }
-          }
-          span {
-            padding: 0 10px;
-            cursor: pointer;
-          }
-          .item-children {
-            position: absolute;
-            left: 0;
-            opacity: 0;
-            width: 100%;
-            height: 0;
-            overflow: hidden;
-            border-top: 1px solid #e5e5e5;
-            box-shadow: 0px 7px 6px 0px rgba(0, 0, 0, 0.11);
-            z-index: 10;
-            transition: all 0.5s;
-            background-color: #ffffff;
-            .container {
-              height: 100%;
-              @include flex();
-              .product-box {
-                position: relative;
-                .product {
-                  display: flex;
-                  flex-direction: column;
-                  justify-content: center;
-                  align-items: center;
-                  width: 200px;
-                  height: 220px;
-                  cursor: pointer;
-
-                  .pro-img {
-                    @include height(137px);
-                    img {
-                      width: auto;
-                      height: 111px;
-                    }
-                  }
-                  .pro-name {
-                    @include height(20px);
-                    font-size: 14px;
-                    color: #333;
-                  }
-                  .pro-price {
-                    margin-top: 10px;
-                    font-size: 14px;
-                    @include height(20px);
-                    color: $colorA;
-                  }
-                }
-                &:before {
-                  content: ' ';
-                  position: absolute;
-                  top: 28px;
-                  right: 0;
-                  border-left: 1px solid $colorF;
-                  height: 100px;
-                  width: 1px;
-                }
-                &:last-child:before {
-                  display: none;
-                }
-              }
-            }
-          }
-        }
-      }
-      .header-search {
-        width: 296px;
-        height: 50px;
-        ::v-deep(.el-input__inner) {
-          height: 50px;
-        }
-        ::v-deep(.el-input-group__append) {
-          &:hover {
-            background-color: $colorA;
-          }
-          .el-icon-search {
-            font-size: 18px;
           }
         }
       }

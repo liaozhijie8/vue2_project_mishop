@@ -1,54 +1,50 @@
 <template>
-  <div class="card-container">
-    <div
-      class="card-box"
-      :class="{ 'card-active': !item.data.state }"
-      v-for="item in rangerList"
-      :key="item.id"
-    >
-      <div class="order-state" :class="{ 'state-active': !item.data.state }">
-        <div class="left">
-          <p>{{ item.data.state ? '已收货' : '等待付款' }}</p>
-          <p>
-            <span>{{ item.data.time }}</span
-            ><span>|</span><span>{{ item.data.name }}</span
-            ><span>|</span><span>订单号:{{ item.data.orderId }}</span
-            ><span>|</span><span>在线支付</span>
-          </p>
-        </div>
-        <div class="right">
-          <p>
-            <span>{{ item.data.state ? '实付金额' : '应付金额' }}:</span
-            ><span>{{ item.data.total }}</span
-            ><span>元</span>
-          </p>
-        </div>
+  <div class="card-container" :class="{ 'card-active': !orderData.state }">
+    <div class="order-state" :class="{ 'state-active': !orderData.state }">
+      <div class="left">
+        <p v-if="orderData.state===1">已收货</p>
+        <p v-else-if="orderData.state===2" class="awaitAccep">待收货</p>
+        <p v-else class="awaitPay">等待付款</p>
+        <p>
+          <span>{{ orderData.content.time }}</span
+          ><span>|</span><span>{{ orderData.content.name }}</span
+          ><span>|</span><span>订单号:{{ orderData.content.orderId }}</span
+          ><span>|</span><span>在线支付</span>
+        </p>
       </div>
-      <div class="product-list" v-for="list in item.data.list" :key="list.id">
-        <div class="list">
-          <div class="img">
-            <img :src="list.img" alt="" />
-          </div>
-          <div class="detail">
-            <div class="name">
-              <span>{{ list.name }}</span
-              ><span>{{ list.type }}</span>
-            </div>
-            <div class="price">
-              <span>{{ list.price }}</span
-              ><span>X</span><span>{{ list.number }}</span>
-            </div>
-          </div>
-        </div>
-        <div class="action">
-          <button>立即付款</button>
-          <button>订单详情</button>
-          <button>联系客服</button>
-        </div>
+      <div class="right">
+        <p>
+          <span>{{ orderData.state ? '实付金额' : '应付金额' }}:</span
+          ><span>{{ orderData.content.total }}</span
+          ><span>元</span>
+        </p>
       </div>
-      <!-- 删除按钮 -->
-      <i class="el-icon-delete delete-icon"></i>
     </div>
+    <div class="product-list">
+      <div class="list" v-for="item in orderData.list" :key="item.id">
+        <div class="img">
+          <img :src="item.img" alt="" />
+        </div>
+        <div class="detail">
+          <div class="name">
+            <span>{{ item.name }}</span
+            ><span>{{ item.type }}</span>
+          </div>
+          <div class="price">
+            <span>{{ item.price }}</span
+            ><span>X</span><span>{{ item.number }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="action">
+        <button class="pay" v-if="orderData.state===0">立即付款</button>
+        <button>订单详情</button>
+        <button v-if="orderData.state">申请售后</button>
+        <button>联系客服</button>
+      </div>
+    </div>
+    <!-- 删除按钮 -->
+    <i class="el-icon-delete delete-icon"></i>
   </div>
 </template>
 <script>
@@ -56,30 +52,14 @@ export default {
   name: 'order-card',
   props: {
     orderData: {
-      type: Array,
+      type: Object,
       default: function () {
-        return []
+        return {}
       }
     }
   },
   data() {
-    return {
-      rangerList: this.$props.orderData
-    }
-  },
-  methods: {
-    /* 筛选出已收货订单 */
-    doneArray() {
-      return this.$props.orderData.filter((item) => {
-        return item.data.state === 1
-      })
-    },
-    // 筛选出待支付订单
-    uppayArray() {
-      return this.$props.orderData.filter((item) => {
-        return item.data.state === 0
-      })
-    }
+    return {}
   }
 }
 </script>
@@ -88,7 +68,7 @@ export default {
 * {
   box-sizing: border-box;
 }
-.card-box {
+.card-container {
   position: relative;
   border: 1px solid rgb(170, 167, 167);
   margin-bottom: 20px;
@@ -112,6 +92,12 @@ export default {
     display: flex;
     justify-content: space-between;
     .left {
+      .awaitPay{
+        color: red;
+      }
+      .awaitAccep{
+        color: red;
+      }
       p {
         &:first-child {
           font-size: 16px;
@@ -178,6 +164,11 @@ export default {
         border: 1px solid $colorD;
         color: $colorC;
         cursor: pointer;
+      }
+      .pay{
+        background-color: red;
+        color: white;
+        border: 0;
       }
     }
   }

@@ -42,7 +42,6 @@ export default {
 @import '@/assets/scss/config.scss';
 @import '@/assets/scss/base.scss';
 .nav-menu {
-  position: relative;
   width: 264px;
   height: 450px;
   z-index: 9;
@@ -75,6 +74,7 @@ export default {
       padding: 0 20px;
       height: 50px;
       line-height: 50px;
+      cursor: pointer;
       &:hover {
         background-color: orange;
         .menu-box {
