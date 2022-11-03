@@ -24,10 +24,34 @@
     </div>
     <div class="order">
       <ul>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
+        <li>
+          <div class="img"><img src="https://s01.mifile.cn/i/user/portal-icon-1.png" alt=""></div>
+          <div class="text">
+            <p>待支付的订单:<span>0</span></p>
+            <p>查看待支付的订单 ></p>
+          </div>
+        </li>
+        <li>
+          <div class="img"><img src="https://s01.mifile.cn/i/user/portal-icon-2.png" alt=""></div>
+          <div class="text">
+            <p>待支付的订单:<span>0</span></p>
+            <p>查看待支付的订单 ></p>
+          </div>
+        </li>
+        <li>
+          <div class="img"><img src="https://s01.mifile.cn/i/user/portal-icon-3.png" alt=""></div>
+          <div class="text">
+            <p>待支付的订单:<span>0</span></p>
+            <p>查看待支付的订单 ></p>
+          </div>
+        </li>
+        <li>
+          <div class="img"><img src="https://s01.mifile.cn/i/user/portal-icon-4.png" alt=""></div>
+          <div class="text">
+            <p>待支付的订单:<span>0</span></p>
+            <p>查看待支付的订单 ></p>
+          </div>
+        </li>
       </ul>
     </div>
   </div>
@@ -36,7 +60,8 @@
 export default {
   name: 'user-box',
   data() {
-    return {}
+    return {
+    }
   }
 }
 </script>
@@ -89,6 +114,46 @@ export default {
           margin-bottom: 10px;
           span {
             margin-left: 10px;
+          }
+        }
+      }
+    }
+  }
+  .order{
+    padding: 0 40px;
+    ul{
+      display: flex;
+      flex-wrap: wrap;
+      justify-content:space-between;
+      align-items: center;
+      li{
+        width: 400px;
+        height: 200px;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center ;
+        .img{
+          width: 100px;
+          height: 100px;
+          margin-right:20px;
+        }
+        .text{
+          p{
+            span{
+              color: red;
+              padding: 0 5px;
+              font-size: 14px;
+            }
+            &:first-child{
+              font-size: 16px;
+            }
+            &:last-child{
+              color:$colorD;
+              cursor: pointer;
+              &:hover{
+                color: red;
+              }
+            }
           }
         }
       }

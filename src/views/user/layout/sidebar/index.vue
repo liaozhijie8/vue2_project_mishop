@@ -2,14 +2,14 @@
   <div class="sidebar-container">
     <ul>
       <li>订单中心</li>
-      <li>我的订单</li>
+      <li  @click="$router.push('/user/order')">我的订单</li>
       <li>评价晒单</li>
       <li>话费充值订单</li>
       <li>以旧换新订单</li>
     </ul>
     <ul>
       <li>个人中心</li>
-      <li>我的个人中心</li>
+      <li @click="$router.push('/user/portal')">我的个人中心</li>
       <li>消息通知</li>
       <li>购买资格</li>
       <li>现金账户</li>

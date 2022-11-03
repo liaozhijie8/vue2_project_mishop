@@ -44,6 +44,7 @@ const routes = [
       }
     ]
   },
+  /* 个人中心 */
   {
     path: '/user',
     name: 'user',
@@ -54,11 +55,15 @@ const routes = [
         path: '/user/portal',
         name: 'portal',
         component: () => import('@/views/user/portal/index.vue')
+      },
+      // 订单
+      {
+        path: '/user/order',
+        name: 'order',
+        component: () => import('@/views/user/order/index.vue')
       }
     ]
   },
-  /* 个人中心 */
-
   // 购物车清单页面
   {
     path: '/pay',
