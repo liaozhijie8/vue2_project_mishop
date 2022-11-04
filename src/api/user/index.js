@@ -31,3 +31,10 @@ export const profile = () => {
     method: 'GET'
   })
 }
+/* 获取图形验证码 */
+export const getSvgCaptcha = () => {
+  return request({
+    url: '/captcha',
+    method: 'GET'
+  })
+}

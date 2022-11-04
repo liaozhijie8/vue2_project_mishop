@@ -10,13 +10,13 @@
           <a href="">我的喜欢</a>
           <a href="">小米账号</a>
           <a @click.prevent="$store.commit('user/logout')">退出登录</a>
-          <a href="">我的订单</a>
+          <a href="/user/order" target="_blank">我的订单</a>
         </div>
       </a>
       <span>|</span>
       <a href="">消息通知</a>
       <span>|</span>
-      <a href="">我的订单</a>
+      <a href="/user/order" target="_blank">我的订单</a>
     </div>
     <div class="visiting" v-else>
       <a href="/login">登录</a>

@@ -10,7 +10,11 @@ export default {
     token: getItem(TOKEN) || '',
     userInfo: {},
     // 用户输入的密码(需要验证)
-    confirmPassword: ''
+    confirmPassword: '',
+    // 用户输入的验证码
+    svgCode: '',
+    // 后端获取的验证码
+    oSvgCode: ''
   }),
   mutations: {
     setToken(state, token) {
@@ -22,6 +26,14 @@ export default {
     },
     setConfirmPassword(state, payload) {
       state.confirmPassword = payload
+    },
+    // 用户输入的验证码
+    setSvgCode(state, payload) {
+      state.svgCode = payload
+    },
+    // 后端获取的验证码
+    setoSvgCode(state, payload) {
+      state.oSvgCode = payload
     },
     /*  退出登录 */
     logout(state) {
@@ -45,6 +57,7 @@ export default {
             const message = res.message
             commit('setToken', token)
             dispatch('getProfile')
+            router.push('/')
             // todo:保存登录时间
             resolve(message)
           })

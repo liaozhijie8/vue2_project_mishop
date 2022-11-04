@@ -40,9 +40,6 @@
             </keep-alive>
           </transition>
         </div>
-        <div class="other">
-          <div>其他方式登录</div>
-        </div>
       </div>
       <div class="copyright">
         小米公司版权所有-京ICP备10046444-京公网安备11010802020134号-京ICP证110507号
@@ -152,7 +149,6 @@ export default {
         }
       }
       .form {
-        height: 400px;
         // 进入(显示)开始时效果
         .v-enter {
           opacity: 0;
