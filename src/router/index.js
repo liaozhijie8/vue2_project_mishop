@@ -81,6 +81,12 @@ const routes = [
     path: '/checkout',
     name: 'checkout',
     component: () => import('@/views/checkout/index.vue')
+  },
+  // 404
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'NotFound',
+    component: () => import('@/views/errorPage/404/index.vue')
   }
 ]
 
@@ -95,5 +101,14 @@ const router = new VueRouter({
     }
   }
 })
+// 解决Vue-Router升级导致的Uncaught(in promise) navigation guard问题
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location, onResolve, onReject) {
+  if (onResolve || onReject) {
+    return originalPush.call(this, location, onResolve, onReject)
+  }
+
+  return originalPush.call(this, location).catch((err) => err)
+}
 
 export default router

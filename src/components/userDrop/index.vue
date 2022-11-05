@@ -19,9 +19,9 @@
       <a href="/user/order" target="_blank">我的订单</a>
     </div>
     <div class="visiting" v-else>
-      <a href="/login">登录</a>
+      <a href="" @click.prevent="$router.push('/login')">登录</a>
       <span>|</span>
-      <a href="/login">注册</a>
+      <a href="" @click.prevent="$router.push('/login')">注册</a>
     </div>
   </div>
 </template>

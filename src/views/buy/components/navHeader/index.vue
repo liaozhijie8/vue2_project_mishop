@@ -9,11 +9,11 @@
       </div>
       <div class="detail">
         <ul>
-          <li><a href="/detail" :class="{'li-active':isActive==='sketch'}">概述页</a></li>
+          <li><a href="" @click.prevent="$router.push('/detail')" :class="{'li-active':isActive==='sketch'}">概述页</a></li>
           <li><a href="" :class="{'li-active':isActive==='parameter'}">参数页</a></li>
           <li><a href="" :class="{'li-active':isActive==='F'}">F码通道</a></li>
           <li><a href="">咨询客服</a></li>
-          <li><a href="/comment" :class="{'li-active':isActive==='comment'}">用户评价</a></li>
+          <li><a href="" @click.prevent="$router.push('/comment')" :class="{'li-active':isActive==='comment'}">用户评价</a></li>
           <li v-if="isBuy">
             <button class="buyBnt" @click="gotoBuy">立即购买</button>
           </li>

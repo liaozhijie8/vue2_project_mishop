@@ -3,6 +3,7 @@ import md5 from 'md5'
 import { setItem, getItem, removeAllItem } from '@/utils/storage'
 import { TOKEN } from '@/constant'
 import router from '@/router'
+import store from '@/store'
 
 export default {
   namespaced: true,
@@ -63,7 +64,7 @@ export default {
             const message = res.message
             commit('setToken', token)
             dispatch('getProfile')
-            router.push('/')
+            router.push(store.getters.loginPath)
             // todo:保存登录时间
             resolve(message)
           })

@@ -5,6 +5,15 @@ const getters = {
   token: (state) => state.user.token,
   userInfo: (state) => state.user.userInfo,
   getSid: (state) => state.user.sid,
+  // 路由信息
+  getRouterFrom: (state) => state.router.from,
+  loginPath: (state) => {
+    if (state.router.from === '/pay') {
+      return '/checkout'
+    } else {
+      return '/'
+    }
+  },
   hasUserInfo: (state) => {
     return JSON.stringify(state.user.userInfo) !== '{}'
   }

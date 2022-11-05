@@ -5,7 +5,7 @@
     </div>
     <div class="login-layout_content">
       <div class="top">
-        <div class="logo">
+        <div class="logo" @click="$router.push('/')">
           <img src="@/assets/imgs/mi-logo.png" alt="" />
           <h2 class="title">小米账号</h2>
         </div>
@@ -50,9 +50,14 @@
 <script>
 import loginForm from './loginForm/index.vue'
 import signupForm from './signupForm/index.vue'
+import store from '@/store'
 export default {
   name: 'login',
   components: { loginForm, signupForm },
+  beforeRouteEnter(to, from, next) {
+    store.commit('router/setFrom', from.path)
+    next()
+  },
   data() {
     return {
       choseForm: 'login'
@@ -104,6 +109,7 @@ export default {
       .logo {
         display: flex;
         align-items: center;
+        cursor: pointer;
         img {
           width: 49px;
           height: 49px;
