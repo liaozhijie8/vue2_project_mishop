@@ -67,6 +67,9 @@ import {
 } from './validate'
 import store from '@/store'
 import { getSvgCaptcha } from '@/api/user'
+import { SID } from '@/constant'
+import { getItem, setItem } from '@/utils/storage'
+const { v4: uuidv4 } = require('uuid')
 export default {
   name: 'login-from-template',
   props: {
@@ -97,7 +100,9 @@ export default {
         checkPass: [{ validator: validatePass2, trigger: 'blur' }],
         svgCode: [{ validator: validateSvgCode, trigger: 'blur' }]
       },
-      svg: ''
+      svg: '',
+      // 发给后端的唯一标识符
+      sid: ''
     }
   },
   methods: {
@@ -105,6 +110,7 @@ export default {
     getSvgCode() {
       getSvgCaptcha().then((res) => {
         this.svg = res.result.svg.data
+        // 把验证码信息存起来
         store.commit('user/setoSvgCode', res.result.svg.text)
       })
     },
@@ -114,10 +120,20 @@ export default {
           this.$emit('form-event', this.ruleForm)
         }
       })
+    },
+    // 设置后端验证登录的唯一标识符 (未完成后端操作)
+    setSid() {
+      if (getItem(SID)) {
+        this.sid = getItem(SID)
+      } else {
+        this.sid = uuidv4()
+        setItem(SID, this.sid)
+      }
+      store.commit('user/setSid', this.sid)
     }
   },
   watch: {
-    /* 监听对象变化,输入框密码校对 */
+    /* 监听对象变化,为了vuex和外部文件validate校对 */
     'ruleForm.password'(newVal, oldVal) {
       store.commit('user/setConfirmPassword', newVal)
     },
@@ -127,6 +143,7 @@ export default {
   },
   mounted() {
     this.getSvgCode()
+    this.setSid()
   }
 }
 </script>

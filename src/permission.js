@@ -4,11 +4,12 @@ import store from './store'
 /**
  * 路由前置守卫
  */
+const whiteList = ['/pay', '/user/portal']
 router.beforeEach(async (to, from, next) => {
-  // 存在 token ，进入主页
+  // 不存在 token ，不允许访问的页面
   if (!store.getters.token) {
-    if (to.path === '/pay') {
-      next('/login')
+    if (whiteList.indexOf(to.path) > -1) {
+      next('/')
     }
   }
   if (store.getters.token) {

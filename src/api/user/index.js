@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-
+import store from '@/store'
 /* 登录请求 */
 export const login = (data) => {
   return request({
@@ -35,6 +35,9 @@ export const profile = () => {
 export const getSvgCaptcha = () => {
   return request({
     url: '/captcha',
-    method: 'GET'
+    method: 'GET',
+    params: {
+      sid: store.getters.getSid
+    }
   })
 }

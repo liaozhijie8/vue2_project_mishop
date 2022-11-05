@@ -4,6 +4,7 @@ const getters = {
   valioSvgCode: (state) => state.user.oSvgCode,
   token: (state) => state.user.token,
   userInfo: (state) => state.user.userInfo,
+  getSid: (state) => state.user.sid,
   hasUserInfo: (state) => {
     return JSON.stringify(state.user.userInfo) !== '{}'
   }

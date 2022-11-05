@@ -14,7 +14,9 @@ export default {
     // 用户输入的验证码
     svgCode: '',
     // 后端获取的验证码
-    oSvgCode: ''
+    oSvgCode: '',
+    // sid唯一标识符
+    sid: ''
   }),
   mutations: {
     setToken(state, token) {
@@ -34,6 +36,10 @@ export default {
     // 后端获取的验证码
     setoSvgCode(state, payload) {
       state.oSvgCode = payload
+    },
+    // 设置本地的sid到vuex中
+    setSid(state, payload) {
+      state.sid = payload
     },
     /*  退出登录 */
     logout(state) {

@@ -16,6 +16,9 @@ import VueCookie from 'vue-cookie'
 import './permission'
 // 图片懒加载
 import VueLazyload from 'vue-lazyload'
+// dayjs时间格式化
+import dayjs from 'dayjs'
+Vue.prototype.dayjs = dayjs
 Vue.use(VueLazyload, {
   loading: '/imgs/loading-svg/loading-bars.svg'
 })
