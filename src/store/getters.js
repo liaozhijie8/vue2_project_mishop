@@ -11,7 +11,7 @@ const getters = {
     if (state.router.from === '/pay') {
       return '/checkout'
     } else {
-      return '/'
+      return state.router.from
     }
   },
   hasUserInfo: (state) => {

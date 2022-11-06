@@ -1,6 +1,6 @@
 <template>
   <div class="header-logo">
-    <a href="/"></a>
+    <a href="" @click.prevent="$router.push('/')"></a>
   </div>
 </template>
 <script>

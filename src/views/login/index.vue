@@ -70,6 +70,9 @@ export default {
     is_active(val) {
       return this.choseForm === val
     }
+  },
+  mounted() {
+    this.chose(this.$route.params.type || 'login')
   }
 }
 </script>

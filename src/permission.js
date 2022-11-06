@@ -6,6 +6,7 @@ import store from './store'
  */
 const whiteList = ['/user/portal', '/checkout', '/user/order']
 router.beforeEach(async (to, from, next) => {
+  console.log(from)
   // 不存在 token ，不允许访问的页面
   if (!store.getters.token) {
     if (whiteList.indexOf(to.path) > -1) {
