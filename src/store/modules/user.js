@@ -1,4 +1,5 @@
 import { login, register, profile } from '@/api/user'
+import { addUserRole } from '@/api/userRole'
 import md5 from 'md5'
 import { setItem, getItem, removeAllItem } from '@/utils/storage'
 import { TOKEN } from '@/constant'
@@ -82,6 +83,9 @@ export default {
           password: md5(password)
         })
           .then((res) => {
+            // 注册完成后添加用户角色账户
+            const { id } = res.result
+            addUserRole(id)
             resolve(res)
           })
           .catch((err) => {
