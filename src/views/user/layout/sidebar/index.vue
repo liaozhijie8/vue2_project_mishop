@@ -17,7 +17,7 @@
       <li>现金券</li>
       <li>喜欢的商品</li>
       <li>优惠券</li>
-      <li>收货地址</li>
+      <li @click="$router.push('/user/address')">收货地址</li>
       <li>红包</li>
     </ul>
     <ul>

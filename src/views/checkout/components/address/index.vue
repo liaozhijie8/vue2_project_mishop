@@ -8,12 +8,12 @@
         @click="choseItem(item.id)"
         :class="{ active: chose_item === item.id }"
       >
-        <p>{{ item.name }}</p>
+        <p>{{ item.consigness }}</p>
         <p>{{ item.phone }}</p>
         <p>{{ item.address }}</p>
-        <p class="edit" @click="isDialog">修改</p>
+        <p class="edit" @click="isDialog(item)">修改</p>
       </li>
-      <li v-if="is_active" class="add">
+      <li v-if="is_active" class="add" @click="addNewAddress">
         <div>
           <i class="el-icon-circle-plus-outline"></i>
           <p>添加新地址</p>
@@ -31,24 +31,17 @@
 </template>
 <script>
 import AddressDialog from '../addressEdit/index.vue'
+import { getAddressList } from '@/api/address'
 export default {
   name: 'address-box',
   components: {
     AddressDialog
   },
-  props: {
-    addressData: {
-      type: Array,
-      default: function () {
-        return []
-      }
-    }
-  },
   data() {
     return {
       chose_item: '',
       isLoadMore: true,
-      displayList: this.$props.addressData,
+      displayList: '',
       is_active: true,
       is_dialog: false
     }
@@ -61,17 +54,22 @@ export default {
       this.isLoadMore = !this.isLoadMore
     },
     // 弹出修改层
-    isDialog() {
+    isDialog(val) {
+      console.log(val)
       this.is_dialog = true
     },
     test(val) {
       this.is_dialog = val
+    },
+    // 添加新地址
+    addNewAddress() {
+      this.is_dialog = true
     }
   },
   computed: {
     newData() {
       if (this.isLoadMore) {
-        return this.addressData.slice(0, 4)
+        return this.displayList.slice(0, 4)
       }
       return this.displayList
     },
@@ -93,6 +91,10 @@ export default {
   },
   mounted() {
     this.is_active = this.isActive
+    getAddressList().then((res) => {
+      console.log(res)
+      this.displayList = res.result.list
+    })
   }
 }
 </script>

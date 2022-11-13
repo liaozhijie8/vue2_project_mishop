@@ -67,6 +67,12 @@ const routes = [
         path: '/user/order/comment',
         name: 'comment-order',
         component: () => import('@/views/user/comment/index.vue')
+      },
+      // 添加收货地址
+      {
+        path: '/user/address',
+        name: 'address-user',
+        component: () => import('@/views/user/address/index.vue')
       }
     ]
   },

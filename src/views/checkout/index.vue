@@ -3,7 +3,7 @@
     <Header :is-checkout="true"></Header>
     <div class="container">
       <div class="content">
-        <addressBox :address-data="addressList"></addressBox>
+        <addressBox></addressBox>
         <ProductList :product-data="productList"></ProductList>
         <deliveryBox></deliveryBox>
         <PriceDetail @is-showmask="isShowMask"></PriceDetail>
