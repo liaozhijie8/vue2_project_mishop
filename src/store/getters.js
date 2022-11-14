@@ -16,6 +16,9 @@ const getters = {
   },
   hasUserInfo: (state) => {
     return JSON.stringify(state.user.userInfo) !== '{}'
+  },
+  hasAddressList: (state) => {
+    return state.address.addressList.length > 0
   }
 }
 

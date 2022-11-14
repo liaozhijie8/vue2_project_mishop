@@ -83,10 +83,10 @@
     <el-row>
       <el-col :span="8">
         <el-form-item>
-          <el-button type="primary" @click="submitForm('ruleForm')"
-            >立即创建</el-button
-          >
-          <el-button @click="resetForm('ruleForm')">重置</el-button>
+          <el-button type="primary" @click="submitForm('ruleForm')">{{
+            is_add ? '添加地址' : '更新地址'
+          }}</el-button>
+          <el-button @click="resetForm()">重置</el-button>
         </el-form-item>
       </el-col>
       <el-col :span="8" v-show="is_display">
@@ -97,7 +97,7 @@
           </div>
         </div>
       </el-col>
-      <el-col :span="8"  v-show="is_display">
+      <el-col :span="8" v-show="is_display">
         <el-switch v-model="is_default" active-text="设为默认地址"> </el-switch>
       </el-col>
     </el-row>
@@ -105,9 +105,15 @@
 </template>
 
 <script>
-import { validatePhone, formatAddress } from './validator'
-import { addAddress } from '@/api/address'
+import {
+  validatePhone,
+  formatAddress,
+  formatUpdate,
+  RULE_FORM
+} from './validator'
+import { addAddress, updateAddress_api } from '@/api/address'
 import address from '@/utils/address.json' // 全国省市区街道数据
+import store from '@/store'
 export default {
   data() {
     return {
@@ -120,26 +126,19 @@ export default {
       // 区数据
       areaData: [],
       // 街道数据
-      ruleForm: {
-        name: '',
-        phone: '',
-        // 省
-        province: '',
-        // 市
-        city: '',
-        // 区
-        district: '',
-        // 详细地址
-        detail: ''
-      },
+      ruleForm: RULE_FORM,
       // 验证规则
       rules: {
         name: [
-          { required: true, message: '请输入收件人姓名', trigger: 'blur' },
-          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+          {
+            required: true,
+            message: '请输入收件人姓名',
+            trigger: 'blur,change'
+          },
+          { min: 2, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
         ],
         phone: [
-          { required: true, message: '输入手机号码', trigger: 'blur' },
+          { required: true, message: '输入手机号码', trigger: 'blur,change' },
           { validator: validatePhone, trigger: 'blur' }
         ],
         province: [
@@ -147,7 +146,7 @@ export default {
             type: 'string',
             required: true,
             message: '请选择省份',
-            trigger: 'change'
+            trigger: 'change,blur'
           }
         ],
         city: [
@@ -155,7 +154,7 @@ export default {
             type: 'string',
             required: true,
             message: '请选择城市',
-            trigger: 'change'
+            trigger: 'change,blur'
           }
         ],
         district: [
@@ -163,10 +162,12 @@ export default {
             type: 'string',
             required: true,
             message: '请选择地区',
-            trigger: 'change'
+            trigger: 'change,blur'
           }
         ],
-        detail: [{ required: true, message: '请填写详细地址', trigger: 'blur' }]
+        detail: [
+          { required: true, message: '请填写详细地址', trigger: 'blur,change' }
+        ]
       },
       // 添加地址的反馈提示
       tip: '',
@@ -177,31 +178,47 @@ export default {
     // 省份数据初始化
     this.addressData = address
   },
+
   methods: {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           const address = formatAddress(this.ruleForm)
-          const { phone, name } = this.ruleForm
-          addAddress({ consigness: name, phone, address })
-            .then((res) => {
-              this.tip = res.message
-              console.log(res)
-            })
-            .catch((err) => {
-              this.tip = err.message
-              console.log(err)
-            })
-            .finally(() => {
-              this.is_display = true
-            })
+          const { phone, name, id } = this.ruleForm
+          if (this.is_add) {
+            addAddress({ consigness: name, phone, address })
+              .then((res) => {
+                store.dispatch('address/getAddress_store')
+                this.tip = res.message
+                this.ruleForm = RULE_FORM
+              })
+              .catch((err) => {
+                this.tip = err.message
+                console.log(err)
+              })
+              .finally(() => {
+                this.is_display = true
+              })
+          } else {
+            updateAddress_api(id, { consigness: name, phone, address })
+              .then((res) => {
+                this.tip = res.message
+                store.dispatch('address/getAddress_store')
+              })
+              .catch((err) => {
+                this.tip = err.message
+              })
+              .finally(() => {
+                this.is_display = true
+              })
+          }
         } else {
           console.log('error submit!!')
         }
       })
     },
-    resetForm(formName) {
-      this.$refs[formName].resetFields()
+    resetForm() {
+      this.ruleForm = RULE_FORM
     },
     // 省份更改
     changePro(e) {
@@ -231,6 +248,27 @@ export default {
       this.ruleForm.regionalNumber = temp[0].code
       // 获取到街道的数据
       this.jdData = this.areaData.filter((item) => item.name === e)[0].children
+    }
+  },
+  computed: {
+    formData() {
+      return store.state.address.is_add || store.state.address.updateList
+    },
+    is_add() {
+      return store.state.address.is_add
+    }
+  },
+  watch: {
+    formData: {
+      handler(newVal, oldVal) {
+        this.is_display = false
+        if (store.state.address.is_add) {
+          this.ruleForm = RULE_FORM
+        } else {
+          this.ruleForm = formatUpdate(store.state.address.updateList)
+        }
+      },
+      immediate: true
     }
   }
 }

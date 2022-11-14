@@ -1,6 +1,6 @@
 <template>
   <div class="address-container">
-    <AddressBox></AddressBox>
+    <AddressBox :is-user="true"></AddressBox>
   </div>
 </template>
 <script>

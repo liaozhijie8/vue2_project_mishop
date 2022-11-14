@@ -12,6 +12,7 @@
         <p>{{ item.phone }}</p>
         <p>{{ item.address }}</p>
         <p class="edit" @click="isDialog(item)">修改</p>
+        <p class="delete" @click="deleteAddress(item)" v-show="isUser">删除</p>
       </li>
       <li v-if="is_active" class="add" @click="addNewAddress">
         <div>
@@ -31,17 +32,26 @@
 </template>
 <script>
 import AddressDialog from '../addressEdit/index.vue'
-import { getAddressList } from '@/api/address'
+import { deleteAddress_api } from '@/api/address'
+import { notification } from '@/utils/notification'
+import store from '@/store'
 export default {
   name: 'address-box',
   components: {
     AddressDialog
   },
+  props: {
+    // 判断是否处于主页下的地址
+    isUser: {
+      type: Boolean,
+      default: false
+    }
+  },
   data() {
     return {
       chose_item: '',
       isLoadMore: true,
-      displayList: '',
+      // displayList: '',
       is_active: true,
       is_dialog: false
     }
@@ -55,7 +65,8 @@ export default {
     },
     // 弹出修改层
     isDialog(val) {
-      console.log(val)
+      store.commit('address/setIs_add', false)
+      store.commit('address/updateAddress', val.id)
       this.is_dialog = true
     },
     test(val) {
@@ -63,10 +74,22 @@ export default {
     },
     // 添加新地址
     addNewAddress() {
+      store.commit('address/setIs_add', true)
       this.is_dialog = true
+    },
+    // 删除地址
+    deleteAddress(val) {
+      deleteAddress_api(val.id).then((res) => {
+        notification(this, '删除收货地址', res.message, 'success')
+        console.log(res)
+        store.dispatch('address/getAddress_store')
+      })
     }
   },
   computed: {
+    displayList() {
+      return store.state.address.addressList
+    },
     newData() {
       if (this.isLoadMore) {
         return this.displayList.slice(0, 4)
@@ -91,10 +114,7 @@ export default {
   },
   mounted() {
     this.is_active = this.isActive
-    getAddressList().then((res) => {
-      console.log(res)
-      this.displayList = res.result.list
-    })
+    // 获取后台地址数据
   }
 }
 </script>
@@ -113,7 +133,8 @@ export default {
     flex-wrap: wrap;
     .active {
       border: solid 1px red;
-      .edit {
+      .edit,
+      .delete {
         opacity: 1;
         color: red;
       }
@@ -128,7 +149,8 @@ export default {
       padding: 20px;
       cursor: pointer;
       &:hover {
-        .edit {
+        .edit,
+        .delete {
           opacity: 1;
         }
       }
@@ -136,6 +158,16 @@ export default {
         position: absolute;
         bottom: 10px;
         right: 20px;
+        opacity: 0;
+        cursor: pointer;
+        &:hover {
+          color: red;
+        }
+      }
+      .delete {
+        position: absolute;
+        bottom: 10px;
+        right: 50px;
         opacity: 0;
         cursor: pointer;
         &:hover {

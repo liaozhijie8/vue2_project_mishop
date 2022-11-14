@@ -15,3 +15,19 @@ export const getAddressList = () => {
     method: 'GET'
   })
 }
+
+// 更新地址
+export const updateAddress_api = (id, data) => {
+  return request({
+    url: `/address/update/${id}`,
+    method: 'PUT',
+    data
+  })
+}
+// 删除地址
+export const deleteAddress_api = (id) => {
+  return request({
+    url: `/address/delete/${id}`,
+    method: 'DELETE'
+  })
+}
