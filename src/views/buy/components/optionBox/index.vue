@@ -1,8 +1,15 @@
 <template>
   <div class="init">
-    <p class="title">{{data.title}}</p>
+    <p class="title">{{ data.title }}</p>
     <ul>
-      <li v-for="item in data" :key="item._id">{{item.spec}}</li>
+      <li
+        v-for="item in data.list"
+        :key="item._id"
+        :class="{ 'is-active': is_chose === item._id }"
+        @click="choseEvent(item)"
+      >
+        {{ item.spec }}
+      </li>
     </ul>
   </div>
 </template>
@@ -11,14 +18,22 @@ export default {
   name: 'option-box',
   props: {
     data: {
-      type: Array,
+      type: Object,
       default: function () {
-        return []
+        return {}
       }
     }
   },
   data() {
-    return {}
+    return {
+      is_chose: 1
+    }
+  },
+  methods: {
+    choseEvent(val) {
+      this.is_chose = val._id
+      return this.$emit('chose-value', val)
+    }
   }
 }
 </script>
@@ -45,6 +60,10 @@ export default {
         color: orange;
         border: 1px solid orange;
       }
+    }
+    .is-active {
+      color: orange;
+      border: 1px solid orange;
     }
   }
 }

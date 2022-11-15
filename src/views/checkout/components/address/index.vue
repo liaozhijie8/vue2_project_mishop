@@ -5,11 +5,11 @@
       <li
         v-for="item in newData"
         :key="item.id"
-        @click="choseItem(item.id)"
+        @click="choseItem(item)"
         :class="{ active: chose_item === item.id }"
       >
         <p>{{ item.consigness }}</p>
-        <p>{{ item.phone }}</p>
+        <p>{{ item.phone | phoneFilter }}</p>
         <p>{{ item.address }}</p>
         <p class="edit" @click="isDialog(item)">修改</p>
         <p class="delete" @click="deleteAddress(item)" v-show="isUser">删除</p>
@@ -47,18 +47,27 @@ export default {
       default: false
     }
   },
+  filters: {
+    phoneFilter(val) {
+      if (val) {
+        const reg = /^(.{3}).*(.{4})$/
+        return val.replace(reg, '$1****$2')
+      }
+    }
+  },
   data() {
     return {
       chose_item: '',
       isLoadMore: true,
       // displayList: '',
-      is_active: true,
+      is_active: false,
       is_dialog: false
     }
   },
   methods: {
     choseItem(val) {
-      this.chose_item = val
+      this.chose_item = val.id
+      return this.$emit('chose-address', val)
     },
     isLoading() {
       this.isLoadMore = !this.isLoadMore
@@ -81,7 +90,6 @@ export default {
     deleteAddress(val) {
       deleteAddress_api(val.id).then((res) => {
         notification(this, '删除收货地址', res.message, 'success')
-        console.log(res)
         store.dispatch('address/getAddress_store')
       })
     }
@@ -114,7 +122,6 @@ export default {
   },
   mounted() {
     this.is_active = this.isActive
-    // 获取后台地址数据
   }
 }
 </script>

@@ -81,7 +81,7 @@
       </el-form-item>
     </el-row>
     <el-row>
-      <el-col :span="8">
+      <el-col :span="12">
         <el-form-item>
           <el-button type="primary" @click="submitForm('ruleForm')">{{
             is_add ? '添加地址' : '更新地址'
@@ -89,7 +89,7 @@
           <el-button @click="resetForm()">重置</el-button>
         </el-form-item>
       </el-col>
-      <el-col :span="8" v-show="is_display">
+      <el-col :span="12" v-show="is_display">
         <div class="display-tip">
           <div>
             <el-button type="success" icon="el-icon-check" circle></el-button
@@ -97,10 +97,10 @@
           </div>
         </div>
       </el-col>
-      <el-col :span="8" v-show="is_display">
-        <el-switch v-model="is_default" active-text="设为默认地址"> </el-switch>
-      </el-col>
     </el-row>
+    <el-col :span="8">
+      <el-switch v-model="is_default" active-text="设为默认地址"> </el-switch>
+    </el-col>
   </el-form>
 </template>
 
@@ -135,7 +135,7 @@ export default {
             message: '请输入收件人姓名',
             trigger: 'blur,change'
           },
-          { min: 2, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+          { min: 2, max: 5, message: '长度在 2 到 5 个字符', trigger: 'blur' }
         ],
         phone: [
           { required: true, message: '输入手机号码', trigger: 'blur,change' },
@@ -198,6 +198,9 @@ export default {
               })
               .finally(() => {
                 this.is_display = true
+                setTimeout(() => {
+                  this.is_display = false
+                }, 3000)
               })
           } else {
             updateAddress_api(id, { consigness: name, phone, address })
@@ -210,6 +213,9 @@ export default {
               })
               .finally(() => {
                 this.is_display = true
+                setTimeout(() => {
+                  this.is_display = false
+                }, 3000)
               })
           }
         } else {
@@ -261,7 +267,6 @@ export default {
   watch: {
     formData: {
       handler(newVal, oldVal) {
-        this.is_display = false
         if (store.state.address.is_add) {
           this.ruleForm = RULE_FORM
         } else {

@@ -1,26 +1,35 @@
 <template>
-  <div class="pay-container">
-    <div class="left">
-      <div class="address">
-        <div>
-          <span>{{ addressData.name }}</span
-          ><span>{{ addressData.phone }}</span>
-        </div>
-        <div>
-          <span>{{ addressData.address }}</span
-          ><span>修改</span>
+  <div>
+    <!-- 弹出修改层 -->
+    <AddressDialog :is-visible="is_dialog" @close-event="test"></AddressDialog>
+    <div class="pay-container">
+      <div class="left">
+        <div class="address" v-show="!ishasAddress">
+          <div>
+            <span>{{ data.consigness }}</span
+            ><span>{{ data.phone | phoneFilter }}</span>
+          </div>
+          <div>
+            <span>{{ data.address }}</span
+            ><span @click="isDialog()">修改</span>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="right">
-      <button @click="$router.go(-1)">返回购物车</button>
-      <button>立即下单</button>
+      <div class="right">
+        <button @click="$router.go(-1)">返回购物车</button>
+        <button @click="goToPay">立即下单</button>
+      </div>
     </div>
   </div>
 </template>
 <script>
+import AddressDialog from '../addressEdit/index.vue'
+import store from '@/store'
 export default {
   name: 'pay-sumbit',
+  components: {
+    AddressDialog
+  },
   props: {
     addressData: {
       type: Object,
@@ -29,8 +38,55 @@ export default {
       }
     }
   },
+  filters: {
+    phoneFilter(val) {
+      if (val) {
+        const reg = /^(.{3}).*(.{4})$/
+        return val.replace(reg, '$1****$2')
+      }
+    }
+  },
   data() {
-    return {}
+    return { is_dialog: false, data: {} }
+  },
+  computed: {
+    ishasAddress() {
+      return JSON.stringify(this.$props.addressData) === '{}'
+    },
+    addressChange() {
+      return this.$props.addressData
+    },
+    test11() {
+      return store.state.address.addressList
+    }
+  },
+  watch: {
+    addressChange() {
+      this.data = this.$props.addressData
+    },
+    test11(val) {
+      console.log(val)
+      const { id } = this.$props.addressData
+      store.commit('address/updateAddress', id)
+      this.data = store.state.address.updateList[0]
+    }
+  },
+  methods: {
+    goToPay() {
+      if (this.ishasAddress) {
+        alert('请先选择地址')
+      }
+    },
+    test(val) {
+      this.is_dialog = val
+    },
+    // 弹出修改层
+    isDialog() {
+      const { id } = this.$props.addressData
+      store.commit('address/setIs_add', false)
+      store.commit('address/updateAddress', id)
+      this.is_dialog = true
+    }
   }
 }
 </script>

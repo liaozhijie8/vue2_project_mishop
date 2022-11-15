@@ -10,7 +10,6 @@
           <a href="">我的喜欢</a>
           <a href="">小米账号</a>
           <a @click.prevent="$store.commit('user/logout')">退出登录</a>
-          <a href="/user/order" target="_blank">我的订单</a>
         </div>
       </a>
       <span>|</span>
@@ -85,7 +84,7 @@ export default {
         background-color: #fff;
         .list {
           visibility: visible;
-          height: 200px;
+          height: 160px;
           opacity: 1;
         }
         .icon {

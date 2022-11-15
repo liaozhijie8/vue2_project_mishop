@@ -3,11 +3,11 @@
     <Header :is-checkout="true"></Header>
     <div class="container">
       <div class="content">
-        <addressBox></addressBox>
+        <addressBox @chose-address="choseAddress"></addressBox>
         <ProductList :product-data="productList"></ProductList>
         <deliveryBox></deliveryBox>
         <PriceDetail @is-showmask="isShowMask"></PriceDetail>
-        <SumbitBnt :address-data="addressList[0]"></SumbitBnt>
+        <SumbitBnt :address-data="addressList"></SumbitBnt>
       </div>
     </div>
     <ServiceBarVue></ServiceBarVue>
@@ -40,44 +40,7 @@ export default {
   data() {
     return {
       is_showMask: false,
-      addressList: [
-        {
-          id: 1,
-          name: '廖志杰',
-          phone: 12323433222,
-          address: '广东佛山市南海区狮山镇佛山科学技术学院(仙溪校区南区)'
-        },
-        {
-          id: 2,
-          name: '廖志杰',
-          phone: 12323433222,
-          address: '广东佛山市南海区狮山镇佛山科学技术学院(仙溪校区南区)'
-        },
-        {
-          id: 3,
-          name: '廖志杰',
-          phone: 12323433222,
-          address: '广东佛山市南海区狮山镇佛山科学技术学院(仙溪校区南区)'
-        },
-        {
-          id: 4,
-          name: '廖志杰',
-          phone: 12323433222,
-          address: '广东佛山市南海区狮山镇佛山科学技术学院(仙溪校区南区)'
-        },
-        {
-          id: 5,
-          name: '廖志杰',
-          phone: 12323433222,
-          address: '广东佛山市南海区狮山镇佛山科学技术学院(仙溪校区南区)'
-        },
-        {
-          id: 6,
-          name: '廖志杰',
-          phone: 12323433222,
-          address: '广东佛山市南海区狮山镇佛山科学技术学院(仙溪校区南区)'
-        }
-      ],
+      addressList: {},
       productList: [
         {
           id: 1,
@@ -112,6 +75,9 @@ export default {
   methods: {
     isShowMask(val) {
       this.is_showMask = val
+    },
+    choseAddress(val) {
+      this.addressList = val
     }
   }
 }

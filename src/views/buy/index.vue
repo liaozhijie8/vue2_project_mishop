@@ -13,15 +13,16 @@
           <addressBox></addressBox>
           <div class="option-box">
             <optionBox
-              v-for="item in versionData"
-              :key="item.id"
-              :data="item.list"
+              :data="versionData[0]"
+              @chose-value="version"
             ></optionBox>
+            <optionBox :data="versionData[1]" @chose-value="color"></optionBox>
             <serviceBox
               v-for="item in serviceData"
               :key="item.id"
               :title="item.title"
               :service-data="item.data"
+              @chose-service="serviceEvent"
             ></serviceBox>
           </div>
           <selectedBox></selectedBox>
@@ -60,6 +61,9 @@ export default {
   },
   data() {
     return {
+      choseVersion: {},
+      choseColor: {},
+      choseService: {},
       // 选择版本数据
       versionData: [
         {
@@ -75,7 +79,7 @@ export default {
           id: 123,
           title: '选择颜色',
           list: [
-            { _id: 0, spec: '白色' },
+            { _id: 1, spec: '白色' },
             { _id: 2, spec: '金色' },
             { _id: 3, spec: '蓝色' }
           ]
@@ -164,6 +168,19 @@ export default {
           ]
         }
       ]
+    }
+  },
+  methods: {
+    version(val) {
+      this.choseVersion = val
+    },
+    color(val) {
+      this.choseColor = val
+    },
+    serviceEvent(val) {
+      console.log(val)
+      const { title, ...res } = val
+      this.choseService[title] = res
     }
   }
 }

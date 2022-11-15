@@ -1,8 +1,8 @@
 <template>
   <div class="card-box" :class="{ 'is-header': !isTitle }">
-    <div class="chose"><input type="checkbox" value="" /><span>全选</span></div>
+    <div class="chose"><input type="checkbox" value="" /><span v-if="isTitle">全选</span></div>
     <div class="col-img">
-      <img v-show="!isTitle" :src="cardData.img" alt="" />
+      <img v-if="!isTitle" :src="cardData.img" alt="" />
     </div>
     <div class="title" :class="{ active: !isTitle }">
       {{ isTitle ? '商品名称' : cardData.title }}
@@ -73,6 +73,8 @@ export default {
     font-size: 18px;
   }
   .chose {
+    width: 47px;
+    text-align: start;
     input,
     span {
       vertical-align: middle;
