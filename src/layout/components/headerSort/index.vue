@@ -10,26 +10,26 @@
             <span v-if="!isDisplay">全部商品分类</span>
             <NavMenu class="set-navMenu"></NavMenu>
           </li>
-          <li class="item-menu-li" v-for="item in list" :key="item.id">
-            <span>{{ item.name }}</span>
-            <div class="item-children">
-              <div class="container">
-                <ul
-                  v-for="item in item.product"
-                  :key="item.id"
-                  class="product-box"
-                >
-                  <li class="product">
-                    <div class="pro-img">
-                      <img src="/imgs/nav-img/nav-1.png" alt="" />
-                    </div>
-                    <div class="pro-name">{{ item.proname }}</div>
-                    <div class="pro-price">{{ item.proprice }}</div>
-                  </li>
-                </ul>
-              </div>
-            </div>
+        </ul>
+        <ul class="item-menu" @mouseenter="displayBox" @mouseleave="hideBox">
+          <li
+            class="item-menu-li"
+            v-for="item in sortList"
+            :key="item.id"
+            :class="isActive(item.id) ? 'active' : ''"
+          >
+            <span
+              @mouseenter="activeEvent(item.id)"
+              @mouseleave="deActiveEvent"
+              >{{ item.sort_name }}</span
+            >
           </li>
+          <transition name="slide-fade">
+            <SortBOx
+              v-if="isDisplayBox"
+              :product-data="sortBoxData() || test"
+            ></SortBOx>
+          </transition>
         </ul>
       </div>
       <!-- 搜索区域 -->
@@ -48,71 +48,73 @@
 <script>
 import HeaderLogo from '../headerLogo/index.vue'
 import NavMenu from '@/components/navMenu/index.vue'
+import SortBOx from './sortBox/index.vue'
+import { getSortGoodsList_api } from '@/api/sort'
 export default {
   name: 'header-sort',
   components: {
     HeaderLogo,
-    NavMenu
+    NavMenu,
+    SortBOx
   },
   data() {
     return {
-      input3: '',
-      list: [
-        {
-          id: '1',
-          name: '小米手机',
-          product: [
-            { id: 1, proname: '小米手机', proprice: 1999 },
-            { id: 2, proname: '小米cc9', proprice: 1999 },
-            { id: 3, proname: '小米cc9', proprice: 1999 },
-            { id: 4, proname: '小米cc9', proprice: 1999 },
-            { id: 5, proname: '小米cc9', proprice: 1999 },
-            { id: 6, proname: '小米cc9', proprice: 1999 }
-          ]
-        },
-        {
-          id: '2',
-          name: '红米手机',
-          product: [
-            { id: 1, proname: '红米手机', proprice: 1999 },
-            { id: 2, proname: '小米cc9', proprice: 1999 },
-            { id: 3, proname: '小米cc9', proprice: 1999 },
-            { id: 4, proname: '小米cc9', proprice: 1999 },
-            { id: 5, proname: '小米cc9', proprice: 1999 },
-            { id: 6, proname: '小米cc9', proprice: 1999 }
-          ]
-        },
-        {
-          id: '3',
-          name: '路由器',
-          product: [
-            { id: 1, proname: '小米cc9', proprice: 1999 },
-            { id: 2, proname: '小米cc9', proprice: 1999 },
-            { id: 3, proname: '小米cc9', proprice: 1999 },
-            { id: 4, proname: '小米cc9', proprice: 1999 },
-            { id: 5, proname: '小米cc9', proprice: 1999 },
-            { id: 6, proname: '小米cc9', proprice: 1999 }
-          ]
-        },
-        {
-          id: '4',
-          name: '电视',
-          product: [
-            { id: 1, proname: '小米cc9', proprice: 1999 },
-            { id: 2, proname: '小米cc9', proprice: 1999 },
-            { id: 3, proname: '小米cc9', proprice: 1999 },
-            { id: 4, proname: '小米cc9', proprice: 1999 },
-            { id: 5, proname: '小米cc9', proprice: 1999 },
-            { id: 6, proname: '小米cc9', proprice: 1999 }
-          ]
-        }
-      ]
+      // 显示下拉框
+      isDisplayBox: false,
+      // 是否已经请求数据成功
+      isGetId: [],
+      productData: {},
+      currentId: 0,
+      test: [],
+      isClick: true,
+      input3: ''
     }
   },
   computed: {
     // 判断是否打开全部商品分类
     isDisplay() {
       return this.$route.path === '/shop'
+    },
+    // 处理显示的类型数量
+    sortList() {
+      return this.$store.getters.allSortList.slice(0, 7)
+    }
+  },
+  methods: {
+    // 显示下拉框
+    displayBox() {
+      this.isDisplayBox = true
+    },
+    hideBox() {
+      this.isDisplayBox = false
+      this.currentId = 0
+    },
+    // 鼠标进入
+    activeEvent(id) {
+      this.isClick = true
+      const res = this.isGetId.includes(id)
+      if (!res) {
+        getSortGoodsList_api(id).then((res) => {
+          this.isGetId.push(id)
+          this.productData[id] = res.result
+          this.test = this.productData[id]
+          this.currentId = id
+        })
+      } else {
+        this.currentId = id
+      }
+    },
+    // 激活类
+    isActive(id) {
+      return this.currentId === id
+    },
+    // 鼠标离开
+    deActiveEvent() {
+      // this.currentId = 0
+    },
+    // sortBox数据
+    sortBoxData() {
+      return this.productData[this.currentId]
     }
   }
 }
@@ -129,6 +131,21 @@ export default {
     .header-menu {
       width: 850px;
       @include height(100px);
+      // sortBox过渡
+      .slide-fade-enter-active {
+        transition: all 0.3s ease;
+      }
+      .slide-fade-leave-active {
+        transition: all 0.5s cubic-bezier(1, 0.5, 0.8, 1);
+      }
+      .slide-fade-enter {
+        transform: translateY(-20px);
+        opacity: 1;
+      }
+      .slide-fade-leave-to {
+        transform: translateY(-20px);
+        opacity: 0;
+      }
       .item-menu {
         display: inline-block;
         color: #333;
@@ -159,87 +176,22 @@ export default {
             background-color: #fff;
             border: 1px solid red;
             .menu-item {
-              span {
+              .sort-name {
                 color: black;
               }
             }
           }
           ::v-deep(.menu-box) {
-            border-left: 1px solid red;
+            top: -1px;
+            left: 263px;
           }
         }
-        .item-menu-li {
-          &:hover {
-            color: $colorA;
-            .item-children {
-              height: 220px;
-              opacity: 1;
-            }
-          }
+        .active {
+          color: $colorA;
         }
         span {
           padding: 0 10px;
           cursor: pointer;
-        }
-        .item-children {
-          position: absolute;
-          left: 0;
-          opacity: 0;
-          width: 100%;
-          height: 0;
-          overflow: hidden;
-          border-top: 1px solid #e5e5e5;
-          box-shadow: 0px 7px 6px 0px rgba(0, 0, 0, 0.11);
-          z-index: 10;
-          transition: all 0.5s;
-          background-color: #ffffff;
-          .container {
-            height: 100%;
-            @include flex();
-            .product-box {
-              position: relative;
-              .product {
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                width: 200px;
-                height: 220px;
-                cursor: pointer;
-
-                .pro-img {
-                  @include height(137px);
-                  img {
-                    width: auto;
-                    height: 111px;
-                  }
-                }
-                .pro-name {
-                  @include height(20px);
-                  font-size: 14px;
-                  color: #333;
-                }
-                .pro-price {
-                  margin-top: 10px;
-                  font-size: 14px;
-                  @include height(20px);
-                  color: $colorA;
-                }
-              }
-              &:before {
-                content: ' ';
-                position: absolute;
-                top: 28px;
-                right: 0;
-                border-left: 1px solid $colorF;
-                height: 100px;
-                width: 1px;
-              }
-              &:last-child:before {
-                display: none;
-              }
-            }
-          }
         }
       }
     }

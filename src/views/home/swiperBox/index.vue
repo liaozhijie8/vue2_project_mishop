@@ -41,23 +41,23 @@ export default {
       slideList: [
         {
           id: '42',
-          img: '/imgs/slider/slide-1.jpg'
+          url: '/imgs/slider/slide-1.jpg'
         },
         {
           id: '45',
-          img: '/imgs/slider/slide-2.jpg'
+          url: '/imgs/slider/slide-2.jpg'
         },
         {
           id: '46',
-          img: '/imgs/slider/slide-3.jpg'
+          url: '/imgs/slider/slide-3.jpg'
         },
         {
           id: '47',
-          img: '/imgs/slider/slide-4.jpg'
+          url: '/imgs/slider/slide-4.jpg'
         },
         {
           id: '48',
-          img: '/imgs/slider/slide-1.jpg'
+          url: '/imgs/slider/slide-1.jpg'
         }
       ]
     }

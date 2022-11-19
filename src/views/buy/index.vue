@@ -5,11 +5,11 @@
       <div class="container">
         <div class="swiper-container">
           <div class="box">
-            <swiperBase :swiper-data="slideList"></swiperBase>
+            <swiperBase :item-data="goodsInfo.img_url"></swiperBase>
           </div>
         </div>
         <div class="buy-detail">
-          <textBox></textBox>
+          <textBox :data="goodsInfo"></textBox>
           <addressBox></addressBox>
           <div class="option-box">
             <optionBox
@@ -26,7 +26,7 @@
             ></serviceBox>
           </div>
           <selectedBox></selectedBox>
-          <sumbitBnt></sumbitBnt>
+          <sumbitBnt :goods-id="goodsInfo.id"></sumbitBnt>
           <afterSale></afterSale>
         </div>
       </div>
@@ -35,7 +35,7 @@
   </div>
 </template>
 <script>
-import swiperBase from '@/components/swiper/index.vue'
+import swiperBase from '@/components/carousel/index.vue'
 import serviceBox from './components/serviceBox/index.vue'
 import selectedBox from './components/selectedBox/index.vue'
 import textBox from './components/textBox/index.vue'
@@ -45,6 +45,7 @@ import addressBox from './components/addressBox/index.vue'
 import sumbitBnt from './components/sumbitBnt/index.vue'
 import afterSale from './components/afterSale/index.vue'
 import footerBOx from './components/footerBox/index.vue'
+import { getGoodsInfo_api } from '@/api/goods'
 export default {
   name: 'product-buy',
   components: {
@@ -64,6 +65,9 @@ export default {
       choseVersion: {},
       choseColor: {},
       choseService: {},
+      // 获取的商品信息
+      goodsInfo: {},
+      // 用户最终选择的信息
       // 选择版本数据
       versionData: [
         {
@@ -83,20 +87,6 @@ export default {
             { _id: 2, spec: '金色' },
             { _id: 3, spec: '蓝色' }
           ]
-        }
-      ],
-      slideList: [
-        {
-          id: '42',
-          img: 'https://cdn.cnbj0.fds.api.mi-img.com/b2c-shopapi-pms/pms_1656916238.0629960.png'
-        },
-        {
-          id: '45',
-          img: 'https://cdn.cnbj0.fds.api.mi-img.com/b2c-shopapi-pms/pms_1656916238.06123122.png'
-        },
-        {
-          id: '46',
-          img: 'https://cdn.cnbj0.fds.api.mi-img.com/b2c-shopapi-pms/pms_1656916238.06123122.png'
         }
       ],
       serviceData: [
@@ -178,9 +168,22 @@ export default {
       this.choseColor = val
     },
     serviceEvent(val) {
-      console.log(val)
       const { title, ...res } = val
       this.choseService[title] = res
+    },
+    // 获取商品信息
+    getGoodsInfo(id) {
+      getGoodsInfo_api(id).then((res) => {
+        this.goodsInfo = res.result
+      })
+    }
+  },
+  mounted() {
+    this.getGoodsInfo(this.$route.params.id)
+  },
+  watch: {
+    $route() {
+      this.getGoodsInfo(this.$route.params.id)
     }
   }
 }
@@ -203,26 +206,7 @@ export default {
         .box {
           width: 560px;
           height: 560px;
-          ::v-deep(.swiper-container) {
-            height: 560px;
-            .bnt {
-              width: 50px;
-              height: $swiperBntH;
-              &:hover {
-                background-color: $colorD;
-              }
-            }
-            .swiper-button-prev {
-              position: absolute;
-              top: calc((560px - $swiperBntH) / 2);
-              left: 0px;
-            }
-            .swiper-button-next {
-              position: absolute;
-              top: calc((560px - $swiperBntH) / 2);
-              right: 0px;
-            }
-          }
+          z-index: 1;
         }
       }
       .buy-detail {

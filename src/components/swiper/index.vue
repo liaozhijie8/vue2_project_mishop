@@ -1,7 +1,7 @@
 <template>
   <swiper v-bind:options="swiperOption">
     <swiper-slide v-for="item in swiperData" :key="item.id">
-      <a :href="'/product/' + item.id"><img v-bind:src="item.img" /></a>
+      <a :href="'/product/' + item.id"><img v-bind:src="item.url" /></a>
     </swiper-slide>
     <!-- Optional controls -->
     <div class="swiper-pagination" slot="pagination"></div>

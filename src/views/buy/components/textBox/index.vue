@@ -1,6 +1,6 @@
 <template>
   <div class="text-box">
-    <h2>xiaomi 12S Pro</h2>
+    <h2>{{ data.goods_name }}</h2>
     <p class="sale-desc">
       <span class="onSale"
         >「10月20日20点-11月11日，全版本限时优惠300元!24期免息；延保/碎屏保5折；10月直播间下单赠保护壳」</span
@@ -10,7 +10,7 @@
       4600mAh大电量 | 2K AMOLED屏
     </p>
     <p class="price">
-      <span>4399<span>元</span></span>
+      <span>{{data.goods_price}}<span>元</span></span>
       <span><del>4699 元</del></span>
     </p>
   </div>
@@ -18,6 +18,14 @@
 <script>
 export default {
   name: 'text-box',
+  props: {
+    data: {
+      type: Object,
+      default: function () {
+        return {}
+      }
+    }
+  },
   data() {
     return {}
   }

@@ -23,7 +23,7 @@ const routes = [
         component: () => import('@/views/home/index.vue')
       },
       {
-        path: '/buy',
+        path: '/buy/:id',
         name: 'buy',
         component: () => import('@/views/buy/index.vue')
       },
@@ -38,9 +38,14 @@ const routes = [
         component: () => import('@/views/comments/index.vue')
       },
       {
-        path: '/buy/successTip',
+        path: '/successTip',
         name: 'successTip',
         component: () => import('@/views/butSuccessTip/index.vue')
+      },
+      // 匹配成功提示的错误指向
+      {
+        path: '/successTip*',
+        redirect: '/pay'
       }
     ]
   },

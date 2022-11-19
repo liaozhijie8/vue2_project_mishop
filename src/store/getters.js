@@ -19,6 +19,15 @@ const getters = {
   },
   hasAddressList: (state) => {
     return state.address.addressList.length > 0
+  },
+  // 当前是否又分类数据
+  hasSortList: (state) => {
+    return state.sort.allSortList.length > 0
+  },
+  allSortList: (state) => state.sort.allSortList,
+  // 是否有所有商品
+  hasGoodsList: (state) => {
+    return state.goods.goodsList.length > 0
   }
 }
 

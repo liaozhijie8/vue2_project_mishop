@@ -7,12 +7,20 @@
 <script>
 export default {
   name: 'sumbit-bnt',
+  props: {
+    goodsId: {
+      type: Number
+    }
+  },
   data() {
     return {}
   },
   methods: {
     gotopay() {
-      this.$router.push('/buy/successTip')
+      this.$router.push({
+        path: '/successTip',
+        query: { gid: this.$props.goodsId }
+      })
     }
   }
 }

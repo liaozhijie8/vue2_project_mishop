@@ -15,14 +15,17 @@ router.beforeEach(async (to, from, next) => {
         next('/')
       }
     }
-  }
-  if (store.getters.token) {
+  } else {
+    if (!store.getters.hasAddressList) {
+      store.dispatch('address/getAddress_store')
+    }
     if (!store.getters.hasUserInfo) {
       store.dispatch('user/getProfile')
     }
   }
-  if (!store.getters.hasAddressList) {
-    store.dispatch('address/getAddress_store')
+
+  if (!store.getters.hasSortList) {
+    store.dispatch('sort/getSortList')
   }
   /* 每次跳转处于顶部 */
   // chrome

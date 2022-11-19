@@ -4,6 +4,8 @@ import user from './modules/user'
 import router from './modules/router'
 import getters from './getters'
 import address from './modules/address'
+import sort from './modules/sort'
+import goods from './modules/goods'
 
 Vue.use(Vuex)
 
@@ -15,6 +17,8 @@ export default new Vuex.Store({
   modules: {
     user,
     router,
-    address
+    address,
+    sort,
+    goods
   }
 })

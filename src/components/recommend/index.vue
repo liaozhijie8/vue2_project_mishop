@@ -6,22 +6,29 @@
       </div>
       <div class="content">
         <ul>
-          <li v-for="item in recommendList" :key="item.id">
-            <img :src="item.img" alt="商品图片" />
-            <div class="title">{{ item.title }}</div>
+          <li
+            v-for="item in getAllGoods"
+            :key="item.id"
+            @click="openEvent(item.id)"
+          >
+            <div class="img-box">
+              <el-image
+                style="width: 100%; height: 100%"
+                :src="getUrlData(item.img_url[0])"
+                fit="contain"
+              ></el-image>
+            </div>
+            <div class="title">{{ item.goods_name }}</div>
             <div class="price">
-              <span>{{ item.price }}</span
+              <span>{{ item.goods_price }}</span
               >元
             </div>
-            <div class="comment">
-              <span>{{ item.commentNum }}</span
-              >万人好评
-            </div>
+            <div class="comment"><span>1.2</span>万人好评</div>
             <!-- 添加购物车 -->
             <div class="add">
-              <button @click="triggerTip(item.title)">加入购物车</button>
+              <button @click.stop="triggerTip(item.id)">加入购物车</button>
             </div>
-            <div class="tip" :class="{ 'tip-active': isActive(item.title)}">
+            <div class="tip" :class="{ 'tip-active': isActive(item.id) }">
               成功加入购物车
             </div>
           </li>
@@ -31,83 +38,18 @@
   </div>
 </template>
 <script>
+import { getUrl } from '@/utils/dataHandle'
+import { openNewPage } from '@/utils/routeHandle'
 export default {
   name: 'recommend-box',
   data() {
     return {
-      recommendList: [
-        {
-          id: 1,
-          title: '小米数据线',
-          price: 111,
-          commentNum: 23,
-          img: 'https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/6b0db666bc26e888d3e2a3d18ac536ad.png?thumb=1&w=180&h=180&f=webp&q=90'
-        },
-        {
-          id: 2,
-          title: '米家电动剃须刀',
-          price: 111,
-          commentNum: 23,
-          img: 'https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/2de9d5f25140b0ac9aaf15ab6228a030.jpg?thumb=1&w=180&h=180&f=webp&q=90'
-        },
-        {
-          id: 3,
-          title: '红米note',
-          price: 111,
-          commentNum: 23,
-          img: 'https://cdn.cnbj1.fds.api.mi-img.com/nr-pub/202209221557_a006e9e2738b11144e3e1ebe09e80384.png?thumb=1&w=180&h=180&f=webp&q=90'
-        },
-        {
-          id: 4,
-          title: '黑纱',
-          price: 111,
-          commentNum: 23,
-          img: 'https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/4f8c7c2c30b4cdcdcc2bd748a8922495.jpg?thumb=1&w=180&h=180&f=webp&q=90'
-        },
-        {
-          id: 5,
-          title: '电动剃须刀',
-          price: 111,
-          commentNum: 23,
-          img: 'https://cdn.cnbj1.fds.api.mi-img.com/nr-pub/202210272136_5444cd80092a07aecb9af297dae93470.png?thumb=1&w=180&h=180&f=webp&q=90'
-        },
-        {
-          id: 6,
-          title: '耳机',
-          price: 111,
-          commentNum: 23,
-          img: 'https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/6b0db666bc26e888d3e2a3d18ac536ad.png?thumb=1&w=180&h=180&f=webp&q=90'
-        },
-        {
-          id: 7,
-          title: '马桶',
-          price: 111,
-          commentNum: 23,
-          img: 'https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/2de9d5f25140b0ac9aaf15ab6228a030.jpg?thumb=1&w=180&h=180&f=webp&q=90'
-        },
-        {
-          id: 8,
-          title: '铅笔',
-          price: 111,
-          commentNum: 23,
-          img: 'https://cdn.cnbj1.fds.api.mi-img.com/nr-pub/202209221557_a006e9e2738b11144e3e1ebe09e80384.png?thumb=1&w=180&h=180&f=webp&q=90'
-        },
-        {
-          id: 9,
-          title: '米刀',
-          price: 111,
-          commentNum: 23,
-          img: 'https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/4f8c7c2c30b4cdcdcc2bd748a8922495.jpg?thumb=1&w=180&h=180&f=webp&q=90'
-        },
-        {
-          id: 10,
-          title: '米家电剃须刀',
-          price: 111,
-          commentNum: 23,
-          img: 'https://cdn.cnbj1.fds.api.mi-img.com/nr-pub/202210272136_5444cd80092a07aecb9af297dae93470.png?thumb=1&w=180&h=180&f=webp&q=90'
-        }
-      ],
       is_chose: ''
+    }
+  },
+  mounted() {
+    if (!this.$store.getters.hasGoodsList) {
+      this.$store.dispatch('goods/getGoodsList')
     }
   },
   methods: {
@@ -119,6 +61,19 @@ export default {
     },
     isActive(val) {
       return this.is_chose === val
+    },
+    getUrlData(val) {
+      return getUrl(val)
+    },
+    // 查看商品详情
+    openEvent(id) {
+      openNewPage(`/buy/${id}`)
+    }
+  },
+  computed: {
+    // 获取所有商品数据
+    getAllGoods() {
+      return this.$store.state.goods.goodsList
     }
   }
 }
@@ -166,7 +121,7 @@ export default {
           div {
             margin-bottom: 10px;
           }
-          img {
+          .img-box {
             width: 140px;
             height: 140px;
             margin-bottom: 20px;
