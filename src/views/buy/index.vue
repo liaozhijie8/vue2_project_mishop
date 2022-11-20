@@ -9,7 +9,7 @@
           </div>
         </div>
         <div class="buy-detail">
-          <textBox :data="goodsInfo"></textBox>
+          <textBox :data="goodsInfo" :price-data="choseVersion.price"></textBox>
           <addressBox></addressBox>
           <div class="option-box">
             <optionBox
@@ -25,8 +25,16 @@
               @chose-service="serviceEvent"
             ></serviceBox>
           </div>
-          <selectedBox></selectedBox>
-          <sumbitBnt :goods-id="goodsInfo.id"></sumbitBnt>
+          <selectedBox
+            :color-data="choseColor"
+            :goods-info="goodsInfo"
+            :service-data="choseVersionData"
+            :version-data="choseVersion"
+          ></selectedBox>
+          <sumbitBnt
+            :goods-id="goodsInfo.id"
+            @sumbit-event="addToCart"
+          ></sumbitBnt>
           <afterSale></afterSale>
         </div>
       </div>
@@ -46,6 +54,9 @@ import sumbitBnt from './components/sumbitBnt/index.vue'
 import afterSale from './components/afterSale/index.vue'
 import footerBOx from './components/footerBox/index.vue'
 import { getGoodsInfo_api } from '@/api/goods'
+import { objectToArray } from '@/utils/dataHandle'
+import { useCookies } from '@vueuse/integrations/useCookies'
+const cookie = useCookies()
 export default {
   name: 'product-buy',
   components: {
@@ -62,21 +73,21 @@ export default {
   },
   data() {
     return {
-      choseVersion: {},
-      choseColor: {},
       choseService: {},
       // 获取的商品信息
       goodsInfo: {},
-      // 用户最终选择的信息
+      choseColor: {},
+      choseVersion: {},
+      choseVersionData: [],
       // 选择版本数据
       versionData: [
         {
           id: 0,
           title: '选择版本',
           list: [
-            { _id: 1, spec: '8GB+128GB' },
-            { _id: 2, spec: '12GB+128GB' },
-            { _id: 3, spec: '8GB+256GB' }
+            { _id: 1, spec: '8GB+128GB', price: 1499 },
+            { _id: 2, spec: '12GB+128GB', price: 1999 },
+            { _id: 3, spec: '8GB+256GB', price: 2499 }
           ]
         },
         {
@@ -161,6 +172,25 @@ export default {
     }
   },
   methods: {
+    // 提交事件
+    addToCart() {
+      const order = [
+        {
+          version: this.choseVersion,
+          color: this.choseColor
+        }
+      ]
+      const temp = cookie.get('order')
+      console.log(temp)
+      if (cookie.get('order') !== undefined) {
+        temp.push(order[0])
+        cookie.set('order', temp)
+      } else {
+        cookie.set('order', order)
+      }
+
+      console.log(cookie.get('order'))
+    },
     version(val) {
       this.choseVersion = val
     },
@@ -170,11 +200,13 @@ export default {
     serviceEvent(val) {
       const { title, ...res } = val
       this.choseService[title] = res
+      this.choseVersionData = objectToArray(this.choseService)
     },
     // 获取商品信息
     getGoodsInfo(id) {
       getGoodsInfo_api(id).then((res) => {
         this.goodsInfo = res.result
+        this.choseData = res.result
       })
     }
   },

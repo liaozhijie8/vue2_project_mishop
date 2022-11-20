@@ -4,7 +4,11 @@
       <ul v-for="item in productList()" :key="item.id" class="product-box">
         <li class="product" @click="openProduct(item.id)">
           <div class="pro-img">
-            <img :src="imgUrl(item.img_url[0])" alt="" />
+            <el-image
+              style="width: 100%; height: 100%"
+              :src="imgUrl(item.img_url[0])"
+              fit="contain"
+            ></el-image>
           </div>
           <div class="pro-name">{{ item.goods_name }}</div>
           <div class="pro-price">{{ item.goods_price }}</div>

@@ -17,6 +17,7 @@ export default {
   },
   methods: {
     gotopay() {
+      this.$emit('sumbit-event')
       this.$router.push({
         path: '/successTip',
         query: { gid: this.$props.goodsId }

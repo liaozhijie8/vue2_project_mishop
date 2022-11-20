@@ -40,15 +40,13 @@ export default {
     activeEvent(id) {
       this.isClick = true
       const res = this.isGetId.includes(id)
+      this.currentId = id
       if (!res) {
         getSortGoodsList_api(id).then((res) => {
           this.isGetId.push(id)
           this.productData[id] = res.result
           this.test = this.productData[id]
-          this.currentId = id
         })
-      } else {
-        this.currentId = id
       }
     },
     // 鼠标离开

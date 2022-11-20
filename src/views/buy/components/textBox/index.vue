@@ -10,7 +10,7 @@
       4600mAh大电量 | 2K AMOLED屏
     </p>
     <p class="price">
-      <span>{{data.goods_price}}<span>元</span></span>
+      <span>{{ priceData }}<span>元</span></span>
       <span><del>4699 元</del></span>
     </p>
   </div>
@@ -24,10 +24,16 @@ export default {
       default: function () {
         return {}
       }
+    },
+    priceData: {
+      type: Number
     }
   },
   data() {
     return {}
+  },
+  mounted() {
+    // console.log(this.$props.data)
   }
 }
 </script>

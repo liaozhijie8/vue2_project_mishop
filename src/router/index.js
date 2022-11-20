@@ -40,7 +40,7 @@ const routes = [
       {
         path: '/successTip',
         name: 'successTip',
-        component: () => import('@/views/butSuccessTip/index.vue')
+        component: () => import('@/views/buySuccessTip/index.vue')
       },
       // 匹配成功提示的错误指向
       {

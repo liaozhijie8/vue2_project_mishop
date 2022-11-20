@@ -34,6 +34,9 @@ export default {
       this.is_chose = val._id
       return this.$emit('chose-value', val)
     }
+  },
+  mounted() {
+    this.$emit('chose-value', this.$props.data.list[0])
   }
 }
 </script>

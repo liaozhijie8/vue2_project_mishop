@@ -1,23 +1,80 @@
 <template>
   <div class="selected-box">
-    <div class="list" v-for="(item, index) in 3" :key="index">
+    <div class="list">
       <div class="left">
-        <span>xiaomi 12S Pro</span>
-        <span>8GB + 128GB</span>
-        <span>白色</span>
+        <span>{{ goodsInfo.goods_name }}</span>
+        <span>{{ colorData.spec }}</span>
+        <span>{{ versionData.spec }}</span>
       </div>
       <div class="right">
-        <span>4399元</span>
+        <span>{{ versionData.price }}元</span>
       </div>
     </div>
-    <div class="totalPrice">总计:<span>4399元</span></div>
+    <div class="list" v-for="(item, index) in serviceData" :key="index">
+      <div class="left">
+        <span>{{ item.service }}</span>
+      </div>
+      <div class="right">
+        <span>{{ item.price }}元</span>
+      </div>
+    </div>
+    <div class="totalPrice">
+      总计:<span>{{ total }}元</span>
+    </div>
   </div>
 </template>
 <script>
+import { priceHandle } from '@/utils/dataHandle'
 export default {
   name: 'selected-box',
+  props: {
+    goodsInfo: {
+      type: Object,
+      default: function () {
+        return {}
+      }
+    },
+    colorData: {
+      type: Object,
+      default: function () {
+        return {}
+      }
+    },
+    versionData: {
+      type: Object,
+      default: function () {
+        return {}
+      }
+    },
+    serviceData: {
+      type: Array,
+      default: function () {
+        return []
+      }
+    }
+  },
   data() {
     return {}
+  },
+  methods: {
+    // 把对象转化为数组
+  },
+  watch: {
+    // $props: {
+    //   handler() {
+    //     console.log('111')
+    //   },
+    //   deep: true,
+    //   immediate: true
+    // }
+  },
+  computed: {
+    total() {
+      return (
+        priceHandle(this.$props.serviceData, 'price') +
+        this.$props.versionData.price
+      )
+    }
   }
 }
 </script>

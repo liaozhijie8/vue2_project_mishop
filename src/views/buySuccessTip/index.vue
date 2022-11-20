@@ -18,14 +18,14 @@
 </template>
 <script>
 import remommendBox from '@/components/recommend/index.vue'
+
 export default {
   name: 'buy-successtip',
   components: {
     remommendBox
   },
   data() {
-    return {
-    }
+    return {}
   },
   methods: {
     goback() {
@@ -34,7 +34,8 @@ export default {
     gotoPay() {
       this.$router.push('/pay')
     }
-  }
+  },
+  mounted() {}
 }
 </script>
 <style scoped lang="scss">
