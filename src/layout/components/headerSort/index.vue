@@ -96,7 +96,7 @@ export default {
       if (!res) {
         getSortGoodsList_api(id).then((res) => {
           this.isGetId.push(id)
-          this.productData[id] = res.result
+          this.productData[id] = res.result.list
           this.test = this.productData[id]
           this.currentId = id
         })

@@ -42,9 +42,11 @@ export default {
       const res = this.isGetId.includes(id)
       this.currentId = id
       if (!res) {
-        getSortGoodsList_api(id).then((res) => {
+        const pageSize = 24
+        const isDisplay = true
+        getSortGoodsList_api(id, pageSize, { isDisplay }).then((res) => {
           this.isGetId.push(id)
-          this.productData[id] = res.result
+          this.productData[id] = res.result.list
           this.test = this.productData[id]
         })
       }

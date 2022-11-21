@@ -9,9 +9,10 @@ export const getSortList_api = () => {
 }
 
 // 查找某一分类的所有商品
-export const getSortGoodsList_api = (id) => {
+export const getSortGoodsList_api = (id, pageSize) => {
   return request({
     url: `/goods/sort/list/${id}`,
-    method: 'GET'
+    method: 'GET',
+    params: { pageNum: 1, pageSize }
   })
 }
