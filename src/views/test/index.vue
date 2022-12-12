@@ -1,7 +1,7 @@
 <template>
   <div class="box">
     <div class="btnBox">
-      <button class="btn" @click="fun_db_close">关闭数据库</button>
+      <button class="btn" @click="fun_db_close" ref="test">关闭数据库</button>
       <button class="btn" @click="fun_db_remove">删除数据库</button>
     </div>
     <div class="btnBox">
@@ -38,6 +38,7 @@ export default {
   // 页面加载时初始化 indexdb
   mounted() {
     dbCache = new IndexDBCache((msg) => this.supply_message(msg))
+    console.log(this.$refs.test)
   },
 
   // //页面销毁时 关闭数据库

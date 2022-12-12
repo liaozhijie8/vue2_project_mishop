@@ -1,13 +1,12 @@
 import axios from 'axios'
 import store from '@/store'
-import { BASE_URL } from '@/constant'
 /* mock.js设置 */
 const mock = false
 if (mock) {
   require('@/mock/user')
 }
 const service = axios.create({
-  baseURL: BASE_URL,
+  baseURL: process.env.VUE_APP_BASE_API,
   timeout: 5000
 })
 /* 请求拦截器 */

@@ -1,7 +1,7 @@
 <template>
   <div class="drop-down">
     <div class="logined" v-if="isUserInfo">
-      <a class="user_name" @mouseenter="is_active_name = true">
+      <a class="user_name">
         <span class="name">{{ $store.getters.userInfo.user_name }}</span>
         <i class="el-icon-arrow-down icon"></i>
         <div class="list">

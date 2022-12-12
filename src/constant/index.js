@@ -3,6 +3,7 @@
 export const ESAY_MOCK = 'https://mock.mengxuegu.com/mock/634e4348369a770d74bbf5a2/api'
 // 真实的url
 export const BASE_URL = '/api'
+// 代理地址
 // token
 export const TOKEN = 'token'
 // token 时间戳
